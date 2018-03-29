@@ -14,7 +14,9 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 9009 -s public",
-    "build-storybook": "build-storybook -s public"
+    "build-storybook": "build-storybook -s public",
+    "predeploy-storybook": "yarn build-storybook",
+    "deploy-storybook": "storybook-to-ghpages --existing-output-dir=storybook-static"
   },
   "devDependencies": {
     "@storybook/addon-actions": "^3.3.15",

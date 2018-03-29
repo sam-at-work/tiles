@@ -5,7 +5,7 @@ import React from "react";
 
 const tileWidth = "200px";
 const tileHeight = tileWidth;
-const tileSides = 5;
+const tileSides = 4;
 
 const Tile = styled.div`
   display: inline-block;
@@ -21,8 +21,6 @@ export default class FunctionalTile extends React.Component<
   {},
   { rotation: number }
 > {
-  tile: ?HTMLDivElement;
-
   state = {
     rotation: 0
   };
