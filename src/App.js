@@ -40,7 +40,7 @@ class App extends Component {
     const { tiles, rows } = generateRandomBoard(boardHeight, boardWidth);
     dispatch(setBoard(rows));
     dispatch(setTiles(tiles));
-    dispatch(setTileSides(4)); // this should work without too since it is default;
+    dispatch(setTileSides(tileSides)); // this should work without too since it is default;
   }
 
   render() {
