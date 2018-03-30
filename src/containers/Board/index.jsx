@@ -1,20 +1,15 @@
-import React from 'react';
-import Tile from 'components/Tile'
+import React from "react";
+import Tile from "components/Tile";
+import { connect } from "react-redux";
 
-const boardHeight = 3;
-const boardWidth = boardHeight;
+const Board = ({ board }) => {
+  return <div>{board.map(row => <Row row={row} />)}</div>;
+};
 
-const boardHeightArray = [...Array(boardHeight)];
-const boardWidthArray = [...Array(boardWidth)];
+const Row = ({ row }) => <div>{row.map(tileId => <Tile id={tileId} />)}</div>;
 
-const Row = () => (
-  <div>{boardWidthArray.map(()=><Tile/>)}</div>
-);
+const mapStateToProps = state => ({
+  board: state.board
+});
 
-export default () => {
-  return (
-    <div>
-      {boardHeightArray.map(()=><Row/>)}
-    </div>
-  )
-}
+export default connect(mapStateToProps)(Board);

@@ -6,10 +6,16 @@ import { createStore, combineReducers } from "redux";
 import "./index.css";
 import App from "./App";
 import registerServiceWorker from "./registerServiceWorker";
-import * as reducers from "./reducers";
+import settings from "./reducers/boardSettings";
+import tiles from "./reducers/tiles";
+import board from "./reducers/board";
 
-const rootReducer = combineReducers(reducers);
+const rootReducer = combineReducers({ settings, tiles, board });
 const store = createStore(rootReducer);
+
+// Every time the state changes, log it
+// Note that subscribe() returns a function for unregistering the listener
+const unsubscribe = store.subscribe(() => console.log(store.getState()));
 
 render(
   <Provider store={store}>

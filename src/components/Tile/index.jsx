@@ -6,10 +6,14 @@ For reference: has amazing svg animation of water https://stackoverflow.com/ques
 
 import styled from "styled-components";
 import React from "react";
+import { connect } from "react-redux";
+// import settings from "../../reducers/boardSettings";
+import { bindActionCreators } from "redux";
+
+import { rotateTile } from "actionCreators";
 
 const tileWidth = "200px";
 const tileHeight = tileWidth;
-const tileSides = 4;
 const debug = true;
 
 const Tile = styled.div`
@@ -75,40 +79,31 @@ const Pipe = props => (
   </Pattern>
 );
 
-export default class FunctionalTile extends React.Component<
-  {},
-  { rotation: number }
-> {
-  state = {
-    rotation: Math.floor(Math.random() * tileSides)
-  };
-
-  // number of edges between entering and exiting of pipe. 0 <= x <= (tileSides / 2 - 1)
-  pipeType: number;
-
-  constructor(props: {}) {
-    super(props);
-    this.pipeType = Math.floor(Math.random() * tileSides / 2);
-  }
-
-  onClick = (event: SyntheticEvent<HTMLDivElement> & { pageX: number }) => {
+function FunctionalTile({ pipeType, rotation, id, tileSides, rotateTile }) {
+  const onClick = (event: SyntheticEvent<HTMLDivElement> & { pageX: number }) => {
     const middleX = event.currentTarget.offsetWidth / 2;
     const clickX = event.pageX - event.currentTarget.offsetLeft;
 
-    this.setState(prevState => {
-      if (clickX < middleX) {
-        return { rotation: prevState.rotation - 1 };
-      }
-      return { rotation: prevState.rotation + 1 };
-    });
+    const rotation = clickX < middleX ? -1 : 1;
+    rotateTile(id, rotation);
   };
 
-  render() {
-    const { rotation } = this.state;
-    return (
-      <Tile onClick={this.onClick} rotation={rotation / tileSides}>
-        <Pipe clipPath={clipPaths[tileSides][this.pipeType]} />
-      </Tile>
-    );
-  }
+  return (
+    <Tile onClick={onClick} rotation={rotation / tileSides}>
+      <Pipe clipPath={clipPaths[tileSides][pipeType]} />
+    </Tile>
+  );
 }
+
+function mapStateToProps(state, ownProps) {
+  return {
+    ...state.tiles[ownProps.id],
+    tileSides: state.settings.tileSides
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ rotateTile }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(FunctionalTile);

@@ -1,11 +1,7 @@
 const tiles = (state = {}, action) => {
   switch (action.type) {
-    case "ADD_TILE":
-      const tile = {
-        rotation: action.rotation,
-        connected: false
-      };
-      return { ...state, id: tile };
+    case "SET_TILES":
+      return action.tiles;
     case "ROTATE_TILE":
       return {
         ...state,
@@ -14,7 +10,7 @@ const tiles = (state = {}, action) => {
           rotation: state[action.id].rotation + action.rotation
         }
       };
-    case "SET_CONNECTED":
+    case "SET_TILE_CONNECTED":
       return {
         ...state,
         [action.id]: {
@@ -22,7 +18,7 @@ const tiles = (state = {}, action) => {
           connected: true
         }
       };
-    case "SET_DISCONNECTED":
+    case "SET_TILE_DISCONNECTED":
       return {
         ...state,
         [action.id]: {
