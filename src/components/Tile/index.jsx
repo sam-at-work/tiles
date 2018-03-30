@@ -7,10 +7,9 @@ For reference: has amazing svg animation of water https://stackoverflow.com/ques
 import styled from "styled-components";
 import React from "react";
 import { connect } from "react-redux";
-// import settings from "../../reducers/boardSettings";
 import { bindActionCreators } from "redux";
 
-import { rotateTile } from "actionCreators";
+import { rotateTile } from "src/actionCreators";
 
 const tileWidth = "200px";
 const tileHeight = tileWidth;

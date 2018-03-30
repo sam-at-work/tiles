@@ -2,7 +2,9 @@
   "name": "tiles",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://sam-at-work.github.io/tiles",
   "dependencies": {
+    "gh-pages": "^1.1.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.7",
@@ -19,7 +21,10 @@
     "build-storybook": "build-storybook -s public",
     "predeploy-storybook": "yarn build-storybook",
     "deploy-storybook": "storybook-to-ghpages --existing-output-dir=storybook-static",
-    "lint:css": "stylelint './src/**/*.{js,jsx}'"
+    "lint:css": "stylelint './src/**/*.{js,jsx}'",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
+
   },
   "devDependencies": {
     "@storybook/addon-actions": "^3.3.15",

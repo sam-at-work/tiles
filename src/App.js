@@ -2,11 +2,9 @@
 
 import React, { Component } from "react";
 import { connect } from "react-redux";
-
+import Board from "src/containers/Board";
+import { setBoard, setTiles, setTileSides } from "src/actionCreators";
 import "./App.css";
-import Board from "containers/Board";
-
-import { setBoard, setTiles, setTileSides } from "./actionCreators";
 
 const boardHeight = 3;
 const boardWidth = boardHeight;
@@ -42,7 +40,7 @@ class App extends Component {
     const { tiles, rows } = generateRandomBoard(boardHeight, boardWidth);
     dispatch(setBoard(rows));
     dispatch(setTiles(tiles));
-    dispatch(setTileSides(4)); // this should word without too since it is default;
+    dispatch(setTileSides(4)); // this should work without too since it is default;
   }
 
   render() {
