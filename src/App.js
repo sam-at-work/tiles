@@ -1,17 +1,10 @@
 import React, { Component } from "react";
 import "./App.css";
-import Tile from "components/Tile";
+import Board from "containers/Board";
 
 class App extends Component {
   render() {
-    return (
-      <div>
-        <Tile />
-        <Tile />
-        <Tile />
-        <Tile />
-      </div>
-    );
+    return <Board />;
   }
 }
 
