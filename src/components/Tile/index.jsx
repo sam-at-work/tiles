@@ -1,11 +1,16 @@
 // @flow
 
+/*
+For reference: has amazing svg animation of water https://stackoverflow.com/questions/29738787/filling-water-animation/29740828#
+*/
+
 import styled from "styled-components";
 import React from "react";
 
 const tileWidth = "200px";
 const tileHeight = tileWidth;
 const tileSides = 4;
+const debug = true;
 
 const Tile = styled.div`
   display: inline-block;
@@ -13,63 +18,34 @@ const Tile = styled.div`
   height: ${tileHeight};
   margin: 5px;
   transform: rotate(${props => props.rotation}turn);
-  transition: transform 1s; /* dump */
+  transition: transform 1s;
   overflow: hidden;
   will-change: transform;
 `;
 
-// const Pipe = styled.div`
-//   position: absolute;
-//   height: 50%;
-//   width: 50%;
-//   background-color: aqua;
-//   &:before {
-//     content: "";
-//     position: absolute;
-//     height: 100%;
-//     width: 100%;
-//     border: 1px solid black;
-//     border-radius: 50%;
-//     left: -50%;
-//     top: -50%;
-//   }
-//   &:after {
-//     content: "";
-//     position: absolute;
-//     height: 110%;
-//     width: 110%;
-//     border: 1px solid black;
-//     border-radius: 50%;
-//     left: -55%;
-//     top: -55%;
-//   }
-// `;
+const clipPaths = {
+  "4": [
+    "polygon(0 45%, 0 55%, 50% 50%, 55% 0, 45% 0, 43% 43%, 0 45%)",
+    "polygon(0 45%, 0 55%, 100% 55%, 100% 45%, 0 45%)"
+  ]
+};
+
+console.log(clipPaths[4][1]);
 
 const Pattern = styled.div`
   width: 100%;
   height: 100%;
   background-color: sandybrown;
 
-  .water {
+  .pipe {
     position: absolute;
     background-color: lightblue;
-    height: 105%;
-    width: 105%;
-    top: -50%;
-    left: -50%;
-    clip-path: circle(50%);
+    height: 100%;
+    width: 100%;
+    clip-path: ${props => props.clipPath};
   }
 
-  .inner-pattern {
-    position: absolute;
-    background-color: sandybrown;
-    height: 95%;
-    width: 95%;
-    top: -50%;
-    left: -50%;
-    clip-path: circle(50%);
-  }
-
+  // for debug mode
   .cross-hairs {
     &:before {
       content: "";
@@ -90,22 +66,12 @@ const Pattern = styled.div`
       background-color: black;
     }
   }
-  //.outer-circle {
-  //  position: absolute;
-  //  background-color: pink;
-  //  height: 100%;
-  //  width: 100%;
-  //  border-radius: 50%;
-  //  top: -50%;
-  //  left: -50%;
-  //}
 `;
 
-const Pipe = () => (
-  <Pattern>
-    <div className={"water"}>dsa</div>
-    <div className={"inner-pattern"}>dsa</div>
-    <div className={"cross-hairs"} />
+const Pipe = props => (
+  <Pattern {...props}>
+    <div className={"pipe"}>dsa</div>
+    {debug ? <div className={"cross-hairs"} /> : null}
   </Pattern>
 );
 
@@ -117,11 +83,12 @@ export default class FunctionalTile extends React.Component<
     rotation: Math.floor(Math.random() * tileSides)
   };
 
-  type: number; // number of edges between entering and exiting of pipe.
+  // number of edges between entering and exiting of pipe. 0 <= x <= (tileSides / 2 - 1)
+  pipeType: number;
 
-  constructor() {
-    super(constructor);
-    this.type = Math.floor(Math.random() * tileSides / 2);
+  constructor(props: {}) {
+    super(props);
+    this.pipeType = Math.floor(Math.random() * tileSides / 2);
   }
 
   onClick = (event: SyntheticEvent<HTMLDivElement> & { pageX: number }) => {
@@ -140,7 +107,7 @@ export default class FunctionalTile extends React.Component<
     const { rotation } = this.state;
     return (
       <Tile onClick={this.onClick} rotation={rotation / tileSides}>
-        <Pipe type={this.type} />
+        <Pipe clipPath={clipPaths[tileSides][this.pipeType]} />
       </Tile>
     );
   }
