@@ -17,13 +17,32 @@ const debug = true;
 
 const Tile = styled.div`
   display: inline-block;
+  position: relative;
   width: ${tileWidth};
   height: ${tileHeight};
   margin: 5px;
-  transform: rotate(${props => props.rotation}turn);
-  transition: transform 1s;
-  overflow: hidden;
-  will-change: transform;
+
+  // for debug mode
+  .cross-hairs {
+    &:before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 1px;
+      height: 100%;
+      background-color: black;
+    }
+    &:after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background-color: black;
+    }
+  }
 
   .pos {
     position: absolute;
@@ -63,6 +82,9 @@ const Pattern = styled.div`
   width: 100%;
   height: 100%;
   background-color: sandybrown;
+  transform: rotate(${props => props.rotation}turn);
+  transition: transform 1s;
+  will-change: transform;
 
   .pipe {
     position: absolute;
@@ -71,38 +93,23 @@ const Pattern = styled.div`
     width: 100%;
     clip-path: ${props => props.clipPath};
   }
-
-  // for debug mode
-  .cross-hairs {
-    &:before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 50%;
-      width: 1px;
-      height: 100%;
-      background-color: black;
-    }
-    &:after {
-      content: "";
-      position: absolute;
-      top: 50%;
-      left: 0;
-      width: 100%;
-      height: 1px;
-      background-color: black;
-    }
-  }
 `;
 
 const Pipe = props => (
   <Pattern {...props}>
-    <div className={"pipe"}>dsa</div>
-    {debug ? <div className={"cross-hairs"} /> : null}
+    <div className={"pipe"} />
   </Pattern>
 );
 
-function FunctionalTile({ pipeType, rotation, id, edgeToVertex, tileSides, rotateTile }) {
+function FunctionalTile({
+  pipeType,
+  rotation,
+  id,
+  edgeToVertex,
+  tileSides,
+  connected,
+  rotateTile
+}) {
   const onClick = (event: SyntheticEvent<HTMLDivElement> & { pageX: number }) => {
     const middleX = event.currentTarget.offsetWidth / 2;
     const clickX = event.pageX - event.currentTarget.offsetLeft;
@@ -112,16 +119,20 @@ function FunctionalTile({ pipeType, rotation, id, edgeToVertex, tileSides, rotat
   };
 
   return (
-    <Tile onClick={onClick} rotation={rotation / tileSides}>
+    <Tile onClick={onClick}>
+      <Pipe
+        clipPath={clipPaths[tileSides][pipeType]}
+        rotation={rotation / tileSides}
+        connected={connected}
+      />
       {debug ? (
-        <div>
+        <div className={"cross-hairs"}>
           <div className={"pos top"}>{edgeToVertex[0]}</div>
           <div className={"pos right"}>{edgeToVertex[1]}</div>
           <div className={"pos bottom"}>{edgeToVertex[2]}</div>
           <div className={"pos left"}>{edgeToVertex[3]}</div>
         </div>
       ) : null}
-      <Pipe clipPath={clipPaths[tileSides][pipeType]} />
     </Tile>
   );
 }

@@ -6,12 +6,13 @@ import Board from "src/containers/Board";
 import { setBoard, setTiles, setTileSides } from "src/actionCreators";
 import "./App.css";
 
-type Tile = {
+type Tile = {|
   pipeType: number,
   rotation: number,
   id: number,
-  edgeToVertex: { [number]: number }
-};
+  edgeToVertex: { [number]: number },
+  connected: boolean
+|};
 
 const boardHeight = 4;
 const boardWidth = 3;
@@ -50,7 +51,8 @@ function generateRandomBoard(height: number, width: number) {
         pipeType: Math.floor(Math.random() * tileSides / 2),
         rotation: Math.floor(Math.random() * tileSides),
         id: tileId,
-        edgeToVertex: tileEdgeToVertex
+        edgeToVertex: tileEdgeToVertex,
+        connected: false
       };
 
       console.log(row, col);
