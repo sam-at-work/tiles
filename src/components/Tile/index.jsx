@@ -24,6 +24,30 @@ const Tile = styled.div`
   transition: transform 1s;
   overflow: hidden;
   will-change: transform;
+
+  .pos {
+    position: absolute;
+  }
+
+  .top {
+    top: 0;
+    left: 50%;
+  }
+
+  .right {
+    right: 0;
+    top: 50%;
+  }
+
+  .bottom {
+    bottom: 0;
+    left: 50%;
+  }
+
+  .left {
+    top: 50%;
+    left: 0;
+  }
 `;
 
 const clipPaths = {
@@ -78,7 +102,7 @@ const Pipe = props => (
   </Pattern>
 );
 
-function FunctionalTile({ pipeType, rotation, id, tileSides, rotateTile }) {
+function FunctionalTile({ pipeType, rotation, id, edgeToVertex, tileSides, rotateTile }) {
   const onClick = (event: SyntheticEvent<HTMLDivElement> & { pageX: number }) => {
     const middleX = event.currentTarget.offsetWidth / 2;
     const clickX = event.pageX - event.currentTarget.offsetLeft;
@@ -89,6 +113,14 @@ function FunctionalTile({ pipeType, rotation, id, tileSides, rotateTile }) {
 
   return (
     <Tile onClick={onClick} rotation={rotation / tileSides}>
+      {debug ? (
+        <div>
+          <div className={"pos top"}>{edgeToVertex[0]}</div>
+          <div className={"pos right"}>{edgeToVertex[1]}</div>
+          <div className={"pos bottom"}>{edgeToVertex[2]}</div>
+          <div className={"pos left"}>{edgeToVertex[3]}</div>
+        </div>
+      ) : null}
       <Pipe clipPath={clipPaths[tileSides][pipeType]} />
     </Tile>
   );
