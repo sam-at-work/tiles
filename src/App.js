@@ -24,11 +24,7 @@ function generateRandomBoard(height: number, width: number) {
   const tiles = {};
   const rows = [];
 
-  // number of edges formula http://mathworld.wolfram.com/GridGraph.html
-  // - each of these nodes corresponds to an edge of a tile.
-  // const totalNodes = 2 * (boardHeight+1) * (boardWidth+1) - (boardHeight+1) - (boardWidth+1);
-  // const totalNodes = 2 * boardHeight * boardWidth + boardHeight + boardWidth;
-  const totalNodes = boardHeight * boardWidth * tileSides;
+  const totalNodes = boardHeight * boardWidth * tileSides; // one node on each side of each tile
   const adjecencyList = Array.from({ length: totalNodes }, () => []);
 
   const vertexToTile: { [number]: number } = {};
@@ -55,14 +51,12 @@ function generateRandomBoard(height: number, width: number) {
         connected: false
       };
 
-      console.log(row, col);
-
       if (col > 0) {
         adjecencyList[tileEdgeToVertex[3]].push(tiles[rowArray[col - 1]].edgeToVertex[1]);
         adjecencyList[tiles[rowArray[col - 1]].edgeToVertex[1]].push(tileEdgeToVertex[3]);
       }
 
-      if (row > 1) {
+      if (row > 0) {
         adjecencyList[tileEdgeToVertex[0]].push(tiles[rows[row - 1][col]].edgeToVertex[2]);
         adjecencyList[tiles[rows[row - 1][col]].edgeToVertex[2]].push(tileEdgeToVertex[0]);
       }
@@ -79,7 +73,9 @@ class App extends Component<{}> {
   constructor({ dispatch }: { dispatch: Function }) {
     super();
     const { tiles, rows, adjecencyList } = generateRandomBoard(boardHeight, boardWidth);
+
     console.log(adjecencyList);
+
     dispatch(setBoard(rows));
     dispatch(setTiles(tiles));
     dispatch(setTileSides(tileSides)); // this should work without too since it is default;
