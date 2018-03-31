@@ -22,6 +22,23 @@ const Tile = styled.div`
   height: ${tileHeight};
   margin: 5px;
 
+  .pattern {
+    width: 100%;
+    height: 100%;
+    background-color: sandybrown;
+    transform: rotate(${props => props.rotation}turn);
+    transition: transform 1s;
+    will-change: transform;
+
+    .pipe {
+      position: absolute;
+      background-color: ${props => (props.connected ? "lightblue" : "black")};
+      height: 100%;
+      width: 100%;
+      clip-path: ${props => props.clipPath};
+    }
+  }
+
   // for debug mode
   .cross-hairs {
     &:before {
@@ -76,31 +93,6 @@ const clipPaths = {
   ]
 };
 
-console.log(clipPaths[4][1]);
-
-const Pattern = styled.div`
-  width: 100%;
-  height: 100%;
-  background-color: sandybrown;
-  transform: rotate(${props => props.rotation}turn);
-  transition: transform 1s;
-  will-change: transform;
-
-  .pipe {
-    position: absolute;
-    background-color: lightblue;
-    height: 100%;
-    width: 100%;
-    clip-path: ${props => props.clipPath};
-  }
-`;
-
-const Pipe = props => (
-  <Pattern {...props}>
-    <div className={"pipe"} />
-  </Pattern>
-);
-
 function FunctionalTile({
   pipeType,
   rotation,
@@ -119,12 +111,16 @@ function FunctionalTile({
   };
 
   return (
-    <Tile onClick={onClick}>
-      <Pipe
-        clipPath={clipPaths[tileSides][pipeType]}
-        rotation={rotation / tileSides}
-        connected={connected}
-      />
+    <Tile
+      onClick={onClick}
+      clipPath={clipPaths[tileSides][pipeType]}
+      rotation={rotation / tileSides}
+      connected={connected}
+    >
+      <div className={"pattern"}>
+        <div className={"pipe"} />
+      </div>
+
       {debug ? (
         <div className={"cross-hairs"}>
           <div className={"pos top"}>{edgeToVertex[0]}</div>
