@@ -7,7 +7,7 @@ import { setBoard } from "src/actionCreators";
 import "./App.css";
 
 import type { Tile } from "src/types";
-import type { BoardState } from "./types";
+import type { CustomBoard, BoardState } from "./types";
 import { rotateInternalPath } from "./utils/tile";
 
 const boardHeight = 4;
@@ -16,7 +16,8 @@ const tileSides = 4;
 
 let nextTileId = 0;
 let nextVertexId = 0;
-function generateRandomBoard(height: number, width: number): BoardState {
+function generateRandomBoard(height: number, width: number): CustomBoard {
+  const startingVertex = 0;
   const tiles: { [number]: Tile } = {};
   const rows: Array<Array<number>> = [];
 
@@ -40,14 +41,20 @@ function generateRandomBoard(height: number, width: number): BoardState {
 
       // number of edges between entering and exiting of pipe. 0 <= x <= (tileSides / 2 - 1)
       const pipeType = Math.floor(Math.random() * tileSides / 2);
-      const rotation = Math.floor(Math.random() * tileSides);
-      const internalPath = rotateInternalPath(
-        { internalPath: new Set([0, pipeType + 1]), tileSides },
-        rotation
+      do {
+        var rotation = Math.floor(Math.random() * tileSides);
+        var internalPath = rotateInternalPath(
+          { internalPath: new Set([0, pipeType + 1]), tileSides },
+          rotation
+        );
+        var externalPath = new Set([...internalPath].map(vertex => tileEdgeToVertex[vertex]));
+      } while (
+        !externalPath.has(startingVertex) &&
+        Object.values(tileEdgeToVertex).indexOf(startingVertex) !== -1
       );
-      const externalPath = new Set([...internalPath].map(vertex => tileEdgeToVertex[vertex]));
 
       const tile: Tile = {
+        canRotate: !externalPath.has(startingVertex),
         pipeType,
         currentRotation: rotation,
         id: tileId,
@@ -79,14 +86,15 @@ function generateRandomBoard(height: number, width: number): BoardState {
     rows,
     adjacencyList,
     vertexToTile,
-    dimensions: { width: boardWidth, height: boardHeight }
+    dimensions: { width: boardWidth, height: boardHeight },
+    startingVertex
   };
 }
 
 class App extends Component<{}> {
   constructor({ dispatch }: { dispatch: Function }) {
     super();
-    const board: BoardState = generateRandomBoard(boardHeight, boardWidth);
+    const board: CustomBoard = generateRandomBoard(boardHeight, boardWidth);
     console.log(board.vertexToTile);
     dispatch(setBoard(board));
   }

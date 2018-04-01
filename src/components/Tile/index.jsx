@@ -22,6 +22,7 @@ const Tile = styled.div`
   //height: 0;
 
   padding-bottom: 100%;
+  cursor: ${props => (props.canRotate ? "pointer" : "auto")};
 
   .pattern {
     position: absolute;
@@ -96,15 +97,13 @@ const clipPaths = {
 };
 
 function FunctionalTile({
-  pipeType,
-  currentRotation,
-  id,
-  edgeToVertex,
-  tileSides,
-  connected,
-  animationDelay,
   rotateTile,
-  rotationTime
+  id,
+  currentRotation,
+  tileSides,
+  pipeType,
+  edgeToVertex,
+  ...props
 }) {
   const onClick = (event: SyntheticEvent<HTMLDivElement> & { pageX: number }) => {
     const middleX = event.currentTarget.offsetWidth / 2;
@@ -116,12 +115,10 @@ function FunctionalTile({
 
   return (
     <Tile
+      {...props}
       onClick={onClick}
-      clipPath={clipPaths[tileSides][pipeType]}
       rotation={currentRotation / tileSides}
-      connected={connected}
-      rotationTime={rotationTime}
-      animationDelay={animationDelay}
+      clipPath={clipPaths[tileSides][pipeType]}
     >
       <div className={"pattern"}>
         <div className={"pipe"} />

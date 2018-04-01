@@ -10,7 +10,8 @@ export type Tile = {
   internalPath: Set<number>,
   externalPath: Set<number>,
   animationDelay: number,
-  wasConnected?: boolean
+  wasConnected?: boolean,
+  canRotate: boolean,
 };
 
 export type Tiles = {
@@ -30,4 +31,17 @@ export type BoardState = {|
     height: number
   },
   rotationTime: number
+|};
+
+export type CustomBoard = {|
+  tiles: Tiles,
+  rows: Array<Array<number>>,
+  adjacencyList: AdjacencyList,
+  vertexToTile: { [number]: number },
+  dimensions: {
+    width: number,
+    height: number
+  },
+  startingVertex: number,
+  rotationTime?: number
 |};

@@ -1,6 +1,6 @@
 // @flow
 
-import type { BoardState } from "src/types";
+import type { CustomBoard } from "src/types";
 
 export const rotateTile = (id: number, rotation: number) => ({
   type: "ROTATE_TILE",
@@ -8,7 +8,7 @@ export const rotateTile = (id: number, rotation: number) => ({
   rotation
 });
 
-export const setBoard = (board: BoardState) => ({
+export const setBoard = (board: CustomBoard) => ({
   type: "SET_BOARD",
   board
 });

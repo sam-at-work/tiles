@@ -1,6 +1,6 @@
 // @flow
 
-import type { BoardState, AdjacencyList, Tiles, Tile } from "src/types";
+import type { BoardState, CustomBoard, Tiles, Tile } from "src/types";
 
 import { rotateTile } from "src/utils/tile";
 
@@ -9,12 +9,12 @@ const defaultState: BoardState = {
   rows: [[]],
   adjacencyList: [[]],
   vertexToTile: {},
-  startingVertex: 0,
+  startingVertex: -1,
   dimensions: { width: 5, height: 4 },
   rotationTime: 750
 };
 
-const tiles = (state: BoardState, action: { type: string, [string]: any }) => {
+const tiles = (state: BoardState & CustomBoard, action: { type: string, [string]: any }) => {
   switch (action.type) {
     case "SET_BOARD":
       const combinedState = Object.assign({}, defaultState, action.board);
@@ -75,7 +75,7 @@ function updateBoard(tiles: Tiles, state: BoardState): Tiles {
   return tiles;
 }
 
-function exponentialDelay(offset, n) {
+function exponentialDelay(offset, n): number {
   // return offset + 100 * n;
   // return offset * Math.E ** (-12 * n);
   return offset + Math.log(1 + n) * 200;
