@@ -8,7 +8,9 @@ export type Tile = {
   connected: boolean,
   tileSides: number,
   internalPath: Set<number>,
-  externalPath: Set<number>
+  externalPath: Set<number>,
+  animationDelay: number,
+  wasConnected?: boolean
 };
 
 export type Tiles = {
@@ -21,10 +23,11 @@ export type BoardState = {|
   tiles: Tiles,
   rows: Array<Array<number>>,
   adjacencyList: AdjacencyList,
-  startingVertex: number,
   vertexToTile: { [number]: number },
+  startingVertex?: number,
   dimensions: {
     width: number,
     height: number
-  }
+  },
+  rotationTime?: number
 |};

@@ -11,9 +11,7 @@ import { bindActionCreators } from "redux";
 
 import { rotateTile } from "src/actionCreators";
 
-const tileWidth = "200px";
-const tileHeight = tileWidth;
-const debug = true;
+const debug = false;
 
 const Tile = styled.div`
   display: inline-block;
@@ -31,12 +29,12 @@ const Tile = styled.div`
     height: 100%;
     background-color: sandybrown;
     transform: rotate(${props => props.rotation}turn);
-    transition: transform 1s;
+    transition: transform ${props => props.rotationTime}ms;
     will-change: transform;
 
     .pipe {
-      position: absolute;
       background-color: ${props => (props.connected ? "lightblue" : "black")};
+      transition: background-color 200ms ${props => props.animationDelay}ms;
       height: 100%;
       width: 100%;
       clip-path: ${props => props.clipPath};
@@ -104,7 +102,9 @@ function FunctionalTile({
   edgeToVertex,
   tileSides,
   connected,
-  rotateTile
+  animationDelay,
+  rotateTile,
+  rotationTime
 }) {
   const onClick = (event: SyntheticEvent<HTMLDivElement> & { pageX: number }) => {
     const middleX = event.currentTarget.offsetWidth / 2;
@@ -120,6 +120,8 @@ function FunctionalTile({
       clipPath={clipPaths[tileSides][pipeType]}
       rotation={currentRotation / tileSides}
       connected={connected}
+      rotationTime={rotationTime}
+      animationDelay={animationDelay}
     >
       <div className={"pattern"}>
         <div className={"pipe"} />
@@ -139,7 +141,8 @@ function FunctionalTile({
 
 function mapStateToProps(state, ownProps) {
   return {
-    ...state.tiles[ownProps.id]
+    ...state.tiles[ownProps.id],
+    rotationTime: state.rotationTime
   };
 }
 

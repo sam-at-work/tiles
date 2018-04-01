@@ -13,11 +13,10 @@ import { rotateInternalPath } from "./utils/tile";
 const boardHeight = 4;
 const boardWidth = 6;
 const tileSides = 4;
-const STARTING_VERTEX = 0;
 
 let nextTileId = 0;
 let nextVertexId = 0;
-function generateRandomBoard(height: number, width: number) {
+function generateRandomBoard(height: number, width: number): BoardState {
   const tiles: { [number]: Tile } = {};
   const rows: Array<Array<number>> = [];
 
@@ -56,7 +55,8 @@ function generateRandomBoard(height: number, width: number) {
         connected: false,
         tileSides,
         internalPath,
-        externalPath
+        externalPath,
+        animationDelay: 0
       };
 
       if (col > 0) {
@@ -79,7 +79,6 @@ function generateRandomBoard(height: number, width: number) {
     rows,
     adjacencyList,
     vertexToTile,
-    startingVertex: STARTING_VERTEX,
     dimensions: { width: boardWidth, height: boardHeight }
   };
 }
