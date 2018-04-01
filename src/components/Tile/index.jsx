@@ -88,14 +88,14 @@ const Tile = styled.div`
 
 const clipPaths = {
   "4": [
-    "polygon(0 45%, 0 55%, 50% 50%, 55% 0, 45% 0, 43% 43%, 0 45%)",
-    "polygon(0 45%, 0 55%, 100% 55%, 100% 45%, 0 45%)"
+    "polygon(45% 0, 55% 0, 57% 43%, 100% 45%, 100% 55%, 50% 50%, 45% 0)",
+    "polygon(45% 0, 55% 0, 55% 100% , 45% 100% , 45% 0)"
   ]
 };
 
 function FunctionalTile({
   pipeType,
-  rotation,
+  currentRotation,
   id,
   edgeToVertex,
   tileSides,
@@ -114,7 +114,7 @@ function FunctionalTile({
     <Tile
       onClick={onClick}
       clipPath={clipPaths[tileSides][pipeType]}
-      rotation={rotation / tileSides}
+      rotation={currentRotation / tileSides}
       connected={connected}
     >
       <div className={"pattern"}>
@@ -135,8 +135,7 @@ function FunctionalTile({
 
 function mapStateToProps(state, ownProps) {
   return {
-    ...state.tiles[ownProps.id],
-    tileSides: state.settings.tileSides
+    ...state.tiles[ownProps.id]
   };
 }
 

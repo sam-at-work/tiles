@@ -1,20 +1,14 @@
-export const rotateTile = (id, rotation) => ({
+// @flow
+
+import type { BoardState } from "src/types";
+
+export const rotateTile = (id: number, rotation: number) => ({
   type: "ROTATE_TILE",
   id,
   rotation
 });
 
-export const setBoard = board => ({
+export const setBoard = (board: BoardState) => ({
   type: "SET_BOARD",
   board
-});
-
-export const setTiles = tiles => ({
-  type: "SET_TILES",
-  tiles
-});
-
-export const setTileSides = sides => ({
-  type: "SET_TILE_SIDES",
-  sides
 });

@@ -6,13 +6,16 @@ import { createStore, combineReducers } from "redux";
 import "./index.css";
 import App from "./App";
 import registerServiceWorker from "./registerServiceWorker";
-import settings from "./reducers/boardSettings";
-import tiles from "./reducers/tiles";
 import board from "./reducers/board";
 
-const rootReducer = combineReducers({ settings, tiles, board });
+// https://github.com/gaearon/redux-devtools/issues/310
+if (process.env.NODE_ENV !== "production") {
+  import("set.prototype.tojson");
+}
+
+// const rootReducer = combineReducers({ board });
 const store = createStore(
-  rootReducer,
+  board,
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 
