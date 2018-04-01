@@ -17,9 +17,8 @@ const defaultState: BoardState = {
 const tiles = (state: BoardState, action: { type: string, [string]: any }) => {
   switch (action.type) {
     case "SET_BOARD":
-      return Object.assign({}, defaultState, action.board, {
-        tiles: updateBoard(action.board.tiles, action.board)
-      });
+      const combinedState = Object.assign({}, defaultState, action.board);
+      return { ...combinedState, tiles: updateBoard(combinedState.tiles, combinedState) };
     case "ROTATE_TILE":
       const newTiles: Tiles = {
         ...state.tiles,

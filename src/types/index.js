@@ -24,7 +24,7 @@ export type BoardState = {|
   rows: Array<Array<number>>,
   adjacencyList: AdjacencyList,
   vertexToTile: { [number]: number },
-  startingVertex?: number,
+  startingVertex: number,
   dimensions: {
     width: number,
     height: number
