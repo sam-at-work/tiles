@@ -36,49 +36,38 @@ export default tiles;
 function updateBoard(tiles: Tiles, state: BoardState): Tiles {
   const { adjacencyList, startingVertex, vertexToTile } = state;
 
-  const startTileId: number = vertexToTile[startingVertex];
-  const startTile: Tile = tiles[startTileId];
+  // disconnect all tiles
+  // having to use parseInt to make flow happy - related to https://github.com/facebook/flow/issues/2221
+  Object.keys(tiles).map(tileId => (tiles[parseInt(tileId)].connected = false));
 
-  const vertexConnectsToPipe = startTile.externalPath.has(startingVertex);
+  let nextExternalVertex: number = startingVertex;
 
-  tiles = connectTile(tiles, startTileId, vertexConnectsToPipe);
+  while (true) {
+    const tileId: number = vertexToTile[nextExternalVertex];
+    console.log(tileId);
+    const tile: Tile = tiles[tileId];
+    const vertexConnectsToPipe = tile.externalPath.has(nextExternalVertex);
+    if (!vertexConnectsToPipe) break;
 
-  if (!vertexConnectsToPipe) return tiles;
+    tiles = connectTile(tiles, tileId);
+    const nextVertex: number | void = [...tile.externalPath].find(
+      (vertex: number) => vertex !== nextExternalVertex
+    );
+    if (!nextVertex) break; // needed cause in theory find can return undefined - but this can't happen here
 
-  const nextVertex: number | void = [...startTile.externalPath].find(
-    (vertex: number) => vertex !== startingVertex
-  );
-
-  if (!nextVertex) return tiles;
-
-  let nextNextVertex = adjacencyList[nextVertex][0];
+    nextExternalVertex = adjacencyList[nextVertex][0];
+    if (!nextExternalVertex) break; // pipe goes off board here
+  }
 
   return tiles;
 }
 
-function doesPipeInTileTouchVerex(vertex: number, tile: Tile) {
-  if (!Object.values(tile.edgeToVertex).includes(vertex)) {
-    console.log("broke");
-  }
-  const pipeConnectedVertices = pipeConnectedVerticesInTile(tile);
-  return pipeConnectedVertices.has(vertex);
-}
-
-function pipeConnectedVerticesInTile(tile) {
-  if (tile.tileSides === 4) {
-    // if ()
-  }
-  const connectedEdge = tile.rotation % tile.tileSides;
-  const secondConnectedEdge = (connectedEdge + 1 + tile.pipeType) % tile.tileSides;
-  return new Set([tile.edgeToVertex[connectedEdge], tile.edgeToVertex[secondConnectedEdge]]);
-}
-
-function connectTile(tiles, tileId, connected: boolean) {
+function connectTile(tiles, tileId) {
   return {
     ...tiles,
     [tileId]: {
       ...tiles[tileId],
-      connected: connected
+      connected: true
     }
   };
 }

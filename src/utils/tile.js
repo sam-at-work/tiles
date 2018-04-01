@@ -2,11 +2,16 @@
 
 import type { Tile } from "../types";
 
+// https://stackoverflow.com/a/4467559
+export function mod(m: number, n: number) {
+  return (m % n + n) % n;
+}
+
 export function rotateInternalPath(
   { internalPath, tileSides }: { internalPath: Set<number>, tileSides: number },
   rotation: number
 ): Set<number> {
-  return new Set([...internalPath].map(vertex => (vertex + rotation) % tileSides));
+  return new Set([...internalPath].map(vertex => mod(vertex + rotation, tileSides)));
 }
 
 export function rotateTile(tile: Tile, rotation: number): Tile {
