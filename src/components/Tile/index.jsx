@@ -16,6 +16,7 @@ const debug = false;
 const Tile = styled.div`
   display: inline-block;
   position: relative;
+  user-select: none; // disable highligting on phones - not working
 
   //width: 100%;
   //content: "";
