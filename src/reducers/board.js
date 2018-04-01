@@ -60,8 +60,8 @@ function updateBoard(tiles: Tiles, state: BoardState): Tiles {
 
     tile.connected = true;
     if (!tile.wasConnected) {
-      tile.animationDelay =
-        Math.min(Math.abs(rotationTime - 200), rotationTime) + 100 * newlyConnectedTiles++;
+      const offset = Math.min(Math.abs(rotationTime - 400), rotationTime);
+      tile.animationDelay = exponentialDelay(offset, newlyConnectedTiles++);
     }
 
     const nextVertex: number | void = [...tile.externalPath].find(
@@ -73,4 +73,10 @@ function updateBoard(tiles: Tiles, state: BoardState): Tiles {
   }
 
   return tiles;
+}
+
+function exponentialDelay(offset, n) {
+  // return offset + 100 * n;
+  // return offset * Math.E ** (-12 * n);
+  return offset + Math.log(1 + n) * 200;
 }

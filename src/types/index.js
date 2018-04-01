@@ -29,5 +29,5 @@ export type BoardState = {|
     width: number,
     height: number
   },
-  rotationTime?: number
+  rotationTime: number
 |};
