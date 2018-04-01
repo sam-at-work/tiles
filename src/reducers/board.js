@@ -15,7 +15,7 @@ const defaultState: BoardState = {
 const tiles = (state: BoardState = defaultState, action: { type: string, [string]: any }) => {
   switch (action.type) {
     case "SET_BOARD":
-      return action.board;
+      return { ...action.board, tiles: updateBoard(action.board.tiles, action.board) };
     case "ROTATE_TILE":
       const newTiles: Tiles = {
         ...state.tiles,
@@ -40,34 +40,24 @@ function updateBoard(tiles: Tiles, state: BoardState): Tiles {
   // having to use parseInt to make flow happy - related to https://github.com/facebook/flow/issues/2221
   Object.keys(tiles).map(tileId => (tiles[parseInt(tileId)].connected = false));
 
-  let nextExternalVertex: number = startingVertex;
+  let nextExternalVertex: number | void = startingVertex;
 
-  while (true) {
+  while (typeof nextExternalVertex === "number") {
     const tileId: number = vertexToTile[nextExternalVertex];
     console.log(tileId);
     const tile: Tile = tiles[tileId];
     const vertexConnectsToPipe = tile.externalPath.has(nextExternalVertex);
     if (!vertexConnectsToPipe) break;
 
-    tiles = connectTile(tiles, tileId);
+    tile.connected = true;
+
     const nextVertex: number | void = [...tile.externalPath].find(
       (vertex: number) => vertex !== nextExternalVertex
     );
     if (!nextVertex) break; // needed cause in theory find can return undefined - but this can't happen here
 
-    nextExternalVertex = adjacencyList[nextVertex][0];
-    if (!nextExternalVertex) break; // pipe goes off board here
+    nextExternalVertex = adjacencyList[nextVertex][0]; // will be undefined if it points off board
   }
 
   return tiles;
-}
-
-function connectTile(tiles, tileId) {
-  return {
-    ...tiles,
-    [tileId]: {
-      ...tiles[tileId],
-      connected: true
-    }
-  };
 }
