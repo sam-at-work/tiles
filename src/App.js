@@ -11,7 +11,7 @@ import type { BoardState } from "./types";
 import { rotateInternalPath } from "./utils/tile";
 
 const boardHeight = 4;
-const boardWidth = 3;
+const boardWidth = 6;
 const tileSides = 4;
 const STARTING_VERTEX = 0;
 
@@ -74,7 +74,14 @@ function generateRandomBoard(height: number, width: number) {
     }
   }
 
-  return { tiles, rows, adjacencyList, vertexToTile, startingVertex: STARTING_VERTEX };
+  return {
+    tiles,
+    rows,
+    adjacencyList,
+    vertexToTile,
+    startingVertex: STARTING_VERTEX,
+    dimensions: { width: boardWidth, height: boardHeight }
+  };
 }
 
 class App extends Component<{}> {

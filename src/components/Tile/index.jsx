@@ -18,11 +18,15 @@ const debug = true;
 const Tile = styled.div`
   display: inline-block;
   position: relative;
-  width: ${tileWidth};
-  height: ${tileHeight};
-  margin: 5px;
+
+  //width: 100%;
+  //content: "";
+  //height: 0;
+
+  padding-bottom: 100%;
 
   .pattern {
+    position: absolute;
     width: 100%;
     height: 100%;
     background-color: sandybrown;

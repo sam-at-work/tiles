@@ -22,5 +22,9 @@ export type BoardState = {|
   rows: Array<Array<number>>,
   adjacencyList: AdjacencyList,
   startingVertex: number,
-  vertexToTile: { [number]: number }
+  vertexToTile: { [number]: number },
+  dimensions: {
+    width: number,
+    height: number
+  }
 |};
