@@ -1,34 +1,31 @@
 // @flow
 
-import type { BoardState, CustomBoard, Tiles, Tile } from "src/types";
+import type { BoardState, Tiles, Tile } from "src/types";
 
 import { rotateTile } from "src/utils/tile";
 
-const defaultState: BoardState = {
-  tiles: {},
-  rows: [[]],
-  adjacencyList: [[]],
-  vertexToTile: {},
-  startingVertex: -1,
-  dimensions: { width: 5, height: 4 },
-  rotationTime: 750
-};
+// const defaultState: BoardState = {
+//   tiles: {},
+//   rows: [[]],
+//   adjacencyList: [[]],
+//   vertexToTile: {},
+//   startingVertex: -1,
+//   endVertex: -1,
+//   dimensions: { width: 5, height: 4 },
+//   rotationTime: 750
+// };
 
-const tiles = (state: BoardState & CustomBoard, action: { type: string, [string]: any }) => {
+const tiles = (state: BoardState, action: { type: string, [string]: any }) => {
   switch (action.type) {
     case "SET_BOARD":
-      const combinedState = Object.assign({}, defaultState, action.board);
-      return { ...combinedState, tiles: updateBoard(combinedState.tiles, combinedState) };
+      return updateBoard(action.board.tiles, action.board);
     case "ROTATE_TILE":
       const newTiles: Tiles = {
         ...state.tiles,
         [action.id]: rotateTile(state.tiles[action.id], action.rotation)
       };
 
-      return {
-        ...state,
-        tiles: updateBoard(newTiles, state)
-      };
+      return updateBoard(newTiles, state);
     default:
       return state;
   }
@@ -36,7 +33,7 @@ const tiles = (state: BoardState & CustomBoard, action: { type: string, [string]
 
 export default tiles;
 
-function updateBoard(tiles: Tiles, state: BoardState): Tiles {
+function updateBoard(tiles: Tiles, state: BoardState): BoardState {
   const { adjacencyList, startingVertex, vertexToTile, rotationTime } = state;
 
   // disconnect all tiles
@@ -61,10 +58,10 @@ function updateBoard(tiles: Tiles, state: BoardState): Tiles {
     tile.connected = true;
     if (!tile.wasConnected) {
       const offset = Math.min(Math.abs(rotationTime - 400), rotationTime);
-      tile.animationDelay = exponentialDelay(offset, newlyConnectedTiles++);
+      tile.animationDelay = logarithmicDelay(offset, newlyConnectedTiles++);
     }
 
-    const nextVertex: number | void = [...tile.externalPath].find(
+    var nextVertex: number | void = [...tile.externalPath].find(
       (vertex: number) => vertex !== nextExternalVertex
     );
     if (!nextVertex) break; // needed cause in theory find can return undefined - but this can't happen here
@@ -72,10 +69,10 @@ function updateBoard(tiles: Tiles, state: BoardState): Tiles {
     nextExternalVertex = adjacencyList[nextVertex][0]; // will be undefined if it points off board
   }
 
-  return tiles;
+  return { ...state, tiles, pathComplete: nextVertex === state.endVertex };
 }
 
-function exponentialDelay(offset, n): number {
+function logarithmicDelay(offset: number, n: number): number {
   // return offset + 100 * n;
   // return offset * Math.E ** (-12 * n);
   return offset + Math.log(1 + n) * 200;

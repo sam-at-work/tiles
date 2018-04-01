@@ -23,7 +23,9 @@ const Tile = styled.div`
   //height: 0;
 
   padding-bottom: 100%;
-  cursor: ${props => (props.canRotate ? "pointer" : "auto")};
+  cursor: pointer;
+  // cursor: ${props => (props.canRotate ? "pointer" : "auto")};
+  // pointer-events: ${props => (props.canRotate ? "auto" : "none")};
 
   .pattern {
     position: absolute;

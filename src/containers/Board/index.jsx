@@ -12,6 +12,7 @@ const BoardWrapper = styled.div`
     grid-template-columns: repeat(${props => props.width}, 1fr);
     grid-gap: 10px;
     margin-top: 10px;
+    user-select: none;
 
     @media (max-width: 600px) {
       grid-gap: 5px;
@@ -20,7 +21,7 @@ const BoardWrapper = styled.div`
   }
 
   .location {
-    align-self: end;
+    align-self: end; // make locations appear aligned to bottom of cell;
     position: relative;
     //grid-column-start: 1;
     //grid-column-end: 1;
@@ -49,12 +50,25 @@ const BoardWrapper = styled.div`
   }
 
   .placeHolder {
+    display: ${props => (props.width <= 2 ? "none" : "block")};
     grid-column-start: 2;
     grid-column-end: -2;
   }
+
+  .game-over {
+    position: fixed;
+    display: flex;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(255, 0, 0, 0.2);
+  }
 `;
 
-const Board = ({ rows, dimensions }) => {
+const Board = ({ rows, dimensions, pathComplete }) => {
   return (
     <BoardWrapper Wrapper width={dimensions.width}>
       <div className="grid">
@@ -68,13 +82,15 @@ const Board = ({ rows, dimensions }) => {
 
         {rows.map(row => row.map(tileId => <Tile key={tileId} id={tileId} />))}
       </div>
+      {pathComplete ? <div className={"game-over"}>Game Over!</div> : null}
     </BoardWrapper>
   );
 };
 
 const mapStateToProps = state => ({
   rows: state.rows,
-  dimensions: state.dimensions
+  dimensions: state.dimensions,
+  pathComplete: state.pathComplete
 });
 
 export default connect(mapStateToProps)(Board);

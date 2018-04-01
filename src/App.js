@@ -7,24 +7,26 @@ import { setBoard } from "src/actionCreators";
 import "./App.css";
 
 import type { Tile } from "src/types";
-import type { CustomBoard, BoardState } from "./types";
+import type { BoardState } from "./types";
 import { rotateInternalPath } from "./utils/tile";
 
 const boardHeight = 4;
 const boardWidth = 6;
 const tileSides = 4;
+const rotationTime = 750;
 
 let nextTileId = 0;
 let nextVertexId = 0;
-function generateRandomBoard(height: number, width: number): CustomBoard {
+function generateRandomBoard(height: number, width: number): BoardState {
   const startingVertex = 0;
+  let endVertex: number;
   const tiles: { [number]: Tile } = {};
   const rows: Array<Array<number>> = [];
 
   const totalNodes: number = boardHeight * boardWidth * tileSides; // one node on each side of each tile
   const adjacencyList: Array<Array<number>> = Array.from({ length: totalNodes }, () => []);
 
-  const vertexToTile: { [number]: number } = {};
+  const vertexToTile: { [number]: number } = {}; // unused???
 
   for (let row = 0; row < height; row++) {
     const rowArray = [];
@@ -39,6 +41,10 @@ function generateRandomBoard(height: number, width: number): CustomBoard {
         vertexToTile[vertexId] = tileId;
       }
 
+      if (row === 0 && col === width - 1) {
+        endVertex = tileEdgeToVertex[0];
+      }
+
       // number of edges between entering and exiting of pipe. 0 <= x <= (tileSides / 2 - 1)
       const pipeType = Math.floor(Math.random() * tileSides / 2);
       do {
@@ -49,8 +55,8 @@ function generateRandomBoard(height: number, width: number): CustomBoard {
         );
         var externalPath = new Set([...internalPath].map(vertex => tileEdgeToVertex[vertex]));
       } while (
-        !externalPath.has(startingVertex) &&
-        Object.values(tileEdgeToVertex).indexOf(startingVertex) !== -1
+        Object.values(tileEdgeToVertex).indexOf(startingVertex) !== -1 &&
+        !externalPath.has(startingVertex)
       );
 
       const tile: Tile = {
@@ -63,7 +69,8 @@ function generateRandomBoard(height: number, width: number): CustomBoard {
         tileSides,
         internalPath,
         externalPath,
-        animationDelay: 0
+        animationDelay: 0,
+        pathComplete: false
       };
 
       if (col > 0) {
@@ -87,14 +94,17 @@ function generateRandomBoard(height: number, width: number): CustomBoard {
     adjacencyList,
     vertexToTile,
     dimensions: { width: boardWidth, height: boardHeight },
-    startingVertex
+    startingVertex,
+    endVertex,
+    rotationTime,
+    pathComplete: false
   };
 }
 
 class App extends Component<{}> {
   constructor({ dispatch }: { dispatch: Function }) {
     super();
-    const board: CustomBoard = generateRandomBoard(boardHeight, boardWidth);
+    const board: BoardState = generateRandomBoard(boardHeight, boardWidth);
     console.log(board.vertexToTile);
     dispatch(setBoard(board));
   }
