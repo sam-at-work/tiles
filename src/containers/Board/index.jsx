@@ -7,10 +7,7 @@ import brewery from "./brewery.png"; // Tell Webpack this JS file uses this imag
 import pub from "./pub.png"; // Tell Webpack this JS file uses this image
 
 const BoardWrapper = styled.div`
-  ${props =>
-    props.width + 1 >= props.height
-      ? "max-width: " + props.width / (props.height + 1) * 100 + "vmin;"
-      : "width: " + props.width / (props.height + 1) * 100 + "vh;"};
+  max-width: ${props => props.width / (props.height + 1) * 100}vh;
   margin-left: auto;
   margin-right: auto;
 
@@ -20,7 +17,8 @@ const BoardWrapper = styled.div`
 
     display: grid;
     grid-template-columns: repeat(${props => props.width}, 1fr);
-    grid-gap: 10px;
+    //grid-gap: 10px;
+    grid-gap: 5px; // much better when lots of sqaures
     user-select: none;
 
     @media (max-width: 600px) {
