@@ -10,7 +10,7 @@ import type { Tile } from "src/types";
 import type { BoardState } from "./types";
 import { rotateInternalPath } from "./utils/tile";
 
-const boardHeight = 4;
+const boardHeight = 8;
 const boardWidth = 6;
 const tileSides = 4;
 const rotationTime = 750;
@@ -23,7 +23,7 @@ function generateRandomBoard(height: number, width: number): BoardState {
   const tiles: { [number]: Tile } = {};
   const rows: Array<Array<number>> = [];
 
-  const totalNodes: number = boardHeight * boardWidth * tileSides; // one node on each side of each tile
+  const totalNodes: number = height * width * tileSides; // one node on each side of each tile
   const adjacencyList: Array<Array<number>> = Array.from({ length: totalNodes }, () => []);
 
   const vertexToTile: { [number]: number } = {}; // unused???
@@ -93,7 +93,7 @@ function generateRandomBoard(height: number, width: number): BoardState {
     rows,
     adjacencyList,
     vertexToTile,
-    dimensions: { width: boardWidth, height: boardHeight },
+    dimensions: { width: width, height: height },
     startingVertex,
     endVertex,
     rotationTime,
@@ -101,9 +101,47 @@ function generateRandomBoard(height: number, width: number): BoardState {
   };
 }
 
+function getHeightAndWidthBasedOnViewport() {
+  let viewportWidth = document.documentElement.clientWidth;
+  let viewportHeight = document.documentElement.clientHeight;
+  let isLandscape = false;
+
+  if (viewportWidth > viewportHeight) {
+    isLandscape = true;
+    const temp = viewportWidth;
+    viewportWidth = viewportHeight;
+    viewportHeight = viewportWidth;
+  }
+
+  const viewportRatio = viewportWidth / viewportHeight;
+
+  const widths = [[6, 3], [6, 4], [6, 5], [6, 6], [6, 7], [6, 8], [6, 9], [6, 10]];
+  const gameAspectRatios = widths.map(([x, y]) => x / y);
+
+  const closestIndex = gameAspectRatios.reduce(function(_, curr, currentIndex) {
+    return Math.abs(curr - viewportRatio) <
+      Math.abs(gameAspectRatios[currentIndex - 1] - viewportRatio)
+      ? currentIndex
+      : currentIndex - 1;
+  });
+
+  let width, height;
+  if (isLandscape) {
+    width = widths[closestIndex][1];
+    height = widths[closestIndex][0];
+  } else {
+    width = widths[closestIndex][0];
+    height = widths[closestIndex][1];
+  }
+
+  return { boardWidth: width, boardHeight: height - 2, isLandscape };
+}
+
 class App extends Component<{}> {
   constructor({ dispatch }: { dispatch: Function }) {
     super();
+    // const { boardWidth, boardHeight, isLandscape } = getHeightAndWidthBasedOnViewport();
+
     const board: BoardState = generateRandomBoard(boardHeight, boardWidth);
     console.log(board.vertexToTile);
     dispatch(setBoard(board));
