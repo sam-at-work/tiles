@@ -42,6 +42,7 @@ export default class ProblemFactory {
         }
 
         let tile: TileState = new TileFactory(tileId, this.tileSides, tileSideToVertex).getState();
+        tile = rotateTile(tile, Math.floor(Math.random() * this.tileSides));
 
         // make sure first tile is always connected;
         if (isStartingTile) {

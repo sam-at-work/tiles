@@ -18,7 +18,7 @@ export class TileFactory {
     this.tileSideToVertex = tileSideToVertex;
 
     this.pipeType = Math.floor(Math.random() * totalSides / 2);
-    this.currentRotation = Math.floor(Math.random() * totalSides);
+    this.currentRotation = 0;
 
     this.internalPath = new Set([0, this.pipeType + 1]);
     this.externalPath = new Set([...this.internalPath].map(side => tileSideToVertex[side])); // flow error?
