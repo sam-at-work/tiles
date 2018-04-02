@@ -41,9 +41,9 @@ function updateBoard(state: ProblemState, idToTileState: Tiles): ProblemState {
   Object.keys(idToTileState).forEach(tileIdStr => {
     const tileId: number = parseInt(tileIdStr);
     const tile: TileState = idToTileState[tileId];
-    if (tile.connected) prevConnectedTiles.add(tileId);
+    if (tile.connected) prevConnectedTiles.add(tile.id);
     tile.connected = false;
-    tile.animationDelay = null;
+    tile.animationDelay = 0;
   });
 
   let nextExternalVertex: number | void = startingVertex;
@@ -59,7 +59,7 @@ function updateBoard(state: ProblemState, idToTileState: Tiles): ProblemState {
     if (!vertexConnectsToPipe) break;
 
     tile.connected = true;
-    if (prevConnectedTiles.has(tileId)) {
+    if (!prevConnectedTiles.has(tile.id)) {
       tile.animationDelay = logarithmicDelay(rotationTime, newlyConnectedTileCount++);
     }
 

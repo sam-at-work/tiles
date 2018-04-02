@@ -7,8 +7,8 @@ import { setInitialState } from "src/actionCreators";
 import "./App.css";
 import ProblemFactory from "./classes/problem";
 
-const boardHeight = 8;
-const boardWidth = 6;
+const boardHeight = 4;
+const boardWidth = 4;
 
 class App extends Component<{}> {
   constructor({ dispatch }: { dispatch: Function }) {

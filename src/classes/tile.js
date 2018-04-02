@@ -33,7 +33,7 @@ export class TileFactory {
       totalSides: this.totalSides,
       tileSideToVertex: this.tileSideToVertex,
       connected: false,
-      animationDelay: null,
+      animationDelay: 0,
       pipeType: this.pipeType
     };
   }
