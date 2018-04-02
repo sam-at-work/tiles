@@ -7,6 +7,10 @@ import brewery from "./brewery.png"; // Tell Webpack this JS file uses this imag
 import pub from "./pub.png"; // Tell Webpack this JS file uses this image
 
 const BoardWrapper = styled.div`
+  width: 100vmin;
+  margin-left: auto;
+  margin-right: auto;
+
   .grid {
     touch-action: manipulation; // try stop ios safari zooming in
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0); // remove stupid grey background ios on click
@@ -14,12 +18,10 @@ const BoardWrapper = styled.div`
     display: grid;
     grid-template-columns: repeat(${props => props.width}, 1fr);
     grid-gap: 10px;
-    margin-top: 10px;
     user-select: none;
 
     @media (max-width: 600px) {
       grid-gap: 5px;
-      margin-top: 5px;
     }
   }
 

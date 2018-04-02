@@ -8,7 +8,7 @@ import "./App.css";
 import ProblemFactory from "./classes/problem";
 
 const boardHeight = 4;
-const boardWidth = 4;
+const boardWidth = 5;
 
 class App extends Component<{}> {
   constructor({ dispatch }: { dispatch: Function }) {

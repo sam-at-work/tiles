@@ -53,7 +53,6 @@ function updateBoard(state: ProblemState, idToTileState: Tiles): ProblemState {
   // since 0 is valid vertex but is falsey
   while (typeof nextExternalVertex === "number") {
     const tileId: number = vertexToTileId[nextExternalVertex];
-    // console.log(tileId);
     const tile: TileState = idToTileState[tileId];
     const vertexConnectsToPipe = tile.externalPath.has(nextExternalVertex);
     if (!vertexConnectsToPipe) break;
