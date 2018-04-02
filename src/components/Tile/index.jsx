@@ -103,7 +103,7 @@ function FunctionalTile({
   rotateTile,
   id,
   currentRotation,
-  tileSides,
+  totalSides,
   pipeType,
   edgeToVertex,
   ...props
@@ -120,8 +120,8 @@ function FunctionalTile({
     <Tile
       {...props}
       onClick={onClick}
-      rotation={currentRotation / tileSides}
-      clipPath={clipPaths[tileSides][pipeType]}
+      rotation={currentRotation / totalSides}
+      clipPath={clipPaths[totalSides][pipeType]}
     >
       <div className={"pattern"}>
         <div className={"pipe"} />
@@ -141,7 +141,7 @@ function FunctionalTile({
 
 function mapStateToProps(state, ownProps) {
   return {
-    ...state.tiles[ownProps.id],
+    ...ownProps.tile,
     rotationTime: state.rotationTime
   };
 }

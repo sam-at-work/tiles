@@ -71,9 +71,9 @@ const BoardWrapper = styled.div`
   }
 `;
 
-const Board = ({ rows, dimensions, pathComplete }) => {
+const Board = ({ idToTileState, width, pathComplete }) => {
   return (
-    <BoardWrapper Wrapper width={dimensions.width}>
+    <BoardWrapper width={width}>
       <div className="grid">
         <div className="location brewery">
           <img src={brewery} />
@@ -83,7 +83,7 @@ const Board = ({ rows, dimensions, pathComplete }) => {
           <img src={pub} />
         </div>
 
-        {rows.map(row => row.map(tileId => <Tile key={tileId} id={tileId} />))}
+        {Object.values(idToTileState).map(tile => <Tile key={tile.id} tile={tile} />)}
       </div>
       {pathComplete ? <div className={"game-over"}>Game Over!</div> : null}
     </BoardWrapper>
@@ -91,8 +91,8 @@ const Board = ({ rows, dimensions, pathComplete }) => {
 };
 
 const mapStateToProps = state => ({
-  rows: state.rows,
-  dimensions: state.dimensions,
+  idToTileState: state.idToTileState,
+  width: state.width,
   pathComplete: state.pathComplete
 });
 

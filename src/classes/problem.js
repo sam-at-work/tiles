@@ -1,21 +1,23 @@
 // @flow
 
-import TilePiece from "./tile";
+import { TileFactory, rotateTile } from "./tile";
+import type { TileState, ProblemState } from "../types";
 
-export default class Problem {
-  height: number;
-  width: number;
+export default class ProblemFactory {
+  // height: number;
+  // width: number;
   startingVertex: number = 0; // make configurable?;
   tileSides: number = 4; // make configurable?
+  pathComplete: boolean = false;
   rotationTime: number = 750; //ms
   endVertex: number;
-  vertexToTileId: Map<number, number> = new Map();
+  vertexToTileId: { [number]: number } = {};
   adjacencyList: Array<Array<number>>;
-  idToTile: { [number]: TilePiece } = {};
-  pathComplete: boolean = false;
+  idToTileState: { [number]: TileState } = {};
+  width: number;
 
   constructor(height: number, width: number) {
-    this.height = height;
+    // this.height = height;
     this.width = width;
 
     const totalNodes: number = height * width * this.tileSides; // one node on each side of each tile
@@ -34,19 +36,21 @@ export default class Problem {
         for (let side = 0; side < this.tileSides; side++) {
           const vertexId = nextVertexId++;
           if (vertexId == this.startingVertex) isStartingTile = true;
+
           tileSideToVertex[side] = vertexId;
-          this.vertexToTileId.set(vertexId, tileId);
+          this.vertexToTileId[vertexId] = tileId;
         }
 
-        const tile: TilePiece = new TilePiece(tileId, this.tileSides, tileSideToVertex);
-        this.idToTile[tileId] = tile;
+        let tile: TileState = new TileFactory(tileId, this.tileSides, tileSideToVertex).getState();
 
         // make sure first tile is always connected;
         if (isStartingTile) {
           while (!tile.externalPath.has(this.startingVertex)) {
-            tile.rotateInternalPath(1);
+            tile = rotateTile(tile, 1);
           }
         }
+
+        this.idToTileState[tileId] = tile;
 
         // set endVertex to top of last tile in first column
         if (row === 0 && col === width - 1) {
@@ -55,18 +59,31 @@ export default class Problem {
 
         // connect tile to prev column
         if (col > 0) {
-          const prevColTile = this.idToTile[tileId - 1];
+          const prevColTile = this.idToTileState[tileId - 1];
           this.adjacencyList[tileSideToVertex[3]].push(prevColTile.tileSideToVertex[1]);
           this.adjacencyList[prevColTile.tileSideToVertex[1]].push(tileSideToVertex[3]);
         }
 
         // connect tile to pre row
         if (row > 0) {
-          const prevRowTile = this.idToTile[tileId - width];
+          const prevRowTile = this.idToTileState[tileId - width];
           this.adjacencyList[tileSideToVertex[0]].push(prevRowTile.tileSideToVertex[2]);
           this.adjacencyList[prevRowTile.tileSideToVertex[2]].push(tileSideToVertex[0]);
         }
       }
     }
+  }
+
+  getState(): ProblemState {
+    return {
+      startingVertex: this.startingVertex,
+      endVertex: this.endVertex,
+      vertexToTileId: this.vertexToTileId,
+      adjacencyList: this.adjacencyList,
+      idToTileState: this.idToTileState,
+      pathComplete: this.pathComplete,
+      width: this.width,
+      rotationTime: this.rotationTime
+    };
   }
 }

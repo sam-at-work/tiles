@@ -6,7 +6,7 @@ import { createStore, combineReducers } from "redux";
 import "./index.css";
 import App from "./App";
 import registerServiceWorker from "./registerServiceWorker";
-import board from "./reducers/board";
+import problemReducer from "./reducers";
 
 // https://github.com/gaearon/redux-devtools/issues/310
 if (process.env.NODE_ENV !== "production") {
@@ -15,7 +15,7 @@ if (process.env.NODE_ENV !== "production") {
 
 // const rootReducer = combineReducers({ board });
 const store = createStore(
-  board,
+  problemReducer,
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 
