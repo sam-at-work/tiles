@@ -7,7 +7,10 @@ import brewery from "./brewery.png"; // Tell Webpack this JS file uses this imag
 import pub from "./pub.png"; // Tell Webpack this JS file uses this image
 
 const BoardWrapper = styled.div`
-  width: 100vmin;
+  ${props =>
+    props.width + 1 >= props.height
+      ? "max-width: " + props.width / (props.height + 1) * 100 + "vmin;"
+      : "width: " + props.width / (props.height + 1) * 100 + "vh;"};
   margin-left: auto;
   margin-right: auto;
 
@@ -73,9 +76,9 @@ const BoardWrapper = styled.div`
   }
 `;
 
-const Board = ({ idToTileState, width, pathComplete }) => {
+const Board = ({ idToTileState, width, height, pathComplete }) => {
   return (
-    <BoardWrapper width={width}>
+    <BoardWrapper width={width} height={height}>
       <div className="grid">
         <div className="location brewery">
           <img src={brewery} />
@@ -95,6 +98,7 @@ const Board = ({ idToTileState, width, pathComplete }) => {
 const mapStateToProps = state => ({
   idToTileState: state.idToTileState,
   width: state.width,
+  height: state.height,
   pathComplete: state.pathComplete
 });
 

@@ -4,8 +4,8 @@ import { TileFactory, rotateTile } from "./tile";
 import type { TileState, ProblemState } from "../types";
 
 export default class ProblemFactory {
-  // height: number;
-  // width: number;
+  height: number;
+  width: number;
   startingVertex: number = 0; // make configurable?;
   tileSides: number = 4; // make configurable?
   pathComplete: boolean = false;
@@ -14,10 +14,9 @@ export default class ProblemFactory {
   vertexToTileId: { [number]: number } = {};
   adjacencyList: Array<Array<number>>;
   idToTileState: { [number]: TileState } = {};
-  width: number;
 
   constructor(height: number, width: number) {
-    // this.height = height;
+    this.height = height;
     this.width = width;
 
     const totalNodes: number = height * width * this.tileSides; // one node on each side of each tile
@@ -84,6 +83,7 @@ export default class ProblemFactory {
       idToTileState: this.idToTileState,
       pathComplete: this.pathComplete,
       width: this.width,
+      height: this.height,
       rotationTime: this.rotationTime
     };
   }

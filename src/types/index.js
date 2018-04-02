@@ -28,6 +28,7 @@ export type ProblemState = {
   idToTileState: { [number]: TileState },
   pathComplete: boolean,
   width: number,
+  height: number,
   rotationTime: number
 };
 
