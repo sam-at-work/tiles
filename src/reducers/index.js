@@ -1,20 +1,9 @@
 // @flow
 
-import type { Tiles, ProblemState, TileState } from "src/types";
+import type { Tiles, GameState, TileState } from "src/types";
 import { rotateTile } from "../classes/tile";
 
-// const defaultState: BoardState = {
-//   tiles: {},
-//   rows: [[]],
-//   adjacencyList: [[]],
-//   vertexToTile: {},
-//   startingVertex: -1,
-//   endVertex: -1,
-//   dimensions: { width: 5, height: 4 },
-//   rotationTime: 750
-// };
-
-export default function(state: ProblemState, action: { type: string, [string]: any }) {
+export default function(state: GameState, action: { type: string, [string]: any }) {
   switch (action.type) {
     case "SET_INITIAL_STATE":
       return updateBoard(action.problem, action.problem.idToTileState);
@@ -31,8 +20,15 @@ export default function(state: ProblemState, action: { type: string, [string]: a
   }
 }
 
-function updateBoard(state: ProblemState, idToTileState: Tiles): ProblemState {
-  // need space
+/**
+ * Updates the state of the board based on the current rotation of the tile.
+ * idToTileState is updated in place - so must either be a copy or the mapping before initial state is set.
+ *
+ * @param state
+ * @param idToTileState
+ * @returns {{startingVertex: number, endVertex: number, vertexToTileId: {[p: number]: number}, adjacencyList: Array<Array<number>>, idToTileState: {[p: number]: TileState}, pathComplete: boolean, width: number, height: number, rotationTime: number}}
+ */
+function updateBoard(state: GameState, idToTileState: Tiles): GameState {
   const { adjacencyList, startingVertex, vertexToTileId, rotationTime } = state;
 
   // disconnect all tiles

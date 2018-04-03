@@ -20,7 +20,7 @@ export type Tiles = {
 
 // export type AdjacencyList = Array<Array<number>>;
 
-export type ProblemState = {
+export type GameState = {
   startingVertex: number,
   endVertex: number,
   vertexToTileId: { [number]: number },
