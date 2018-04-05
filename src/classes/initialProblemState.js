@@ -1,15 +1,15 @@
 // @flow
 
 import { TileFactory, rotateTile } from "./tile";
-import type { TileState, GameState } from "../types";
+import type { Vertex, TileState, GameState } from "../types";
 
 export default function initialGameState(height: number, width: number): GameState {
   const tileSides: number = 4; // make configurable?
   const rotationTime: number = 750; //ms
-  const startingVertex: number = 0; // make configurable?;
-  let endVertex: number = -1; // set below
+  const startingVertex: Vertex = 0; // make configurable?;
+  let endVertex: Vertex = -1; // set below
 
-  const vertexToTileId: { [number]: number } = {};
+  const vertexToTileId: { [Vertex]: number } = {};
   const idToTileState: { [number]: TileState } = {};
 
   const totalNodes: number = height * width * tileSides; // one node on each side of each tile

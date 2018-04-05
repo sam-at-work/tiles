@@ -1,7 +1,7 @@
 // @flow
 
-import type { Tiles, GameState, TileState } from "src/types";
-import { rotateTile } from "../classes/tile";
+import type { Vertex, Tiles, GameState, TileState } from "src/types";
+import { rotateTile, getOppositeEnfOfPath } from "../classes/tile";
 
 export default function(state: GameState, action: { type: string, [string]: any }) {
   switch (action.type) {
@@ -42,12 +42,11 @@ function updateBoard(state: GameState, idToTileState: Tiles): GameState {
     tile.animationDelay = 0;
   });
 
-  let nextExternalVertex: number | void = startingVertex;
+  let nextExternalVertex: Vertex | void = startingVertex;
   let newlyConnectedTileCount: number = 0;
-  let nextVertex: number | void = undefined;
+  let nextVertex: Vertex | void = undefined;
 
-  // since 0 is valid vertex but is falsey
-  while (typeof nextExternalVertex === "number") {
+  while (nextExternalVertex !== undefined) {
     const tileId: number = vertexToTileId[nextExternalVertex];
     const tile: TileState = idToTileState[tileId];
     const vertexConnectsToPipe = tile.externalPath.has(nextExternalVertex);
@@ -58,7 +57,7 @@ function updateBoard(state: GameState, idToTileState: Tiles): GameState {
       tile.animationDelay = logarithmicDelay(rotationTime, newlyConnectedTileCount++);
     }
 
-    nextVertex = [...tile.externalPath].find((vertex: number) => vertex !== nextExternalVertex);
+    nextVertex = getOppositeEnfOfPath(tile.externalPath, nextExternalVertex);
     if (!nextVertex) break; // needed cause in theory find can return undefined - but this can't happen here
 
     nextExternalVertex = adjacencyList[nextVertex][0]; // will be undefined if it points off board

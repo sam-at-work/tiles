@@ -1,30 +1,22 @@
 // @flow
-
-// export type Tile = {
-//   pipeType: number,
-//   currentRotation: number,
-//   id: number,
-//   edgeToVertex: { [number]: number },
-//   connected: boolean,
-//   tileSides: number,
-//   internalPath: Set<number>,
-//   externalPath: Set<number>,
-//   animationDelay: number,
-//   wasConnected?: boolean,
-//   canRotate: boolean
-// };
+export type TileId = number;
+export type Rotation = number;
+export type Vertex = number;
 
 export type Tiles = {
   [number]: TileState
 };
 
+export type SetOfPaths = Set<Set<Vertex>>;
+
+export type ExternalPath = Set<Vertex>;
 // export type AdjacencyList = Array<Array<number>>;
 
 export type GameState = {
   startingVertex: number,
   endVertex: number,
-  vertexToTileId: { [number]: number },
-  adjacencyList: Array<Array<number>>,
+  vertexToTileId: { [Vertex]: number },
+  adjacencyList: Array<Array<Vertex>>,
   idToTileState: { [number]: TileState },
   pathComplete: boolean,
   width: number,
@@ -34,11 +26,11 @@ export type GameState = {
 
 export type TileState = {
   id: number,
-  currentRotation: number,
+  currentRotation: Rotation,
   internalPath: Set<number>,
-  externalPath: Set<any>, // flow - try change to number
+  externalPath: ExternalPath,
   totalSides: number,
-  tileSideToVertex: { [number]: number },
+  tileSideToVertex: { [number]: Vertex },
   connected: boolean,
   animationDelay: number | null,
   pipeType: number
