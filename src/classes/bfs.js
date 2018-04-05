@@ -16,7 +16,7 @@ type Path = {
 };
 
 export default function bfs(game: GameState) {
-  console.log(game);
+  // console.log(game);
   // a FIFO queue
   const completePaths: Array<Path> = [];
   const openSet: Array<Path> = [];
@@ -35,14 +35,14 @@ export default function bfs(game: GameState) {
     .filter(path => path.has(root))
     .map(path => getOppositeEnfOfPath(path, root));
 
-  console.log(verticesReachable);
+  // console.log(verticesReachable);
   const verticesForNextTiles = verticesReachable
     .map(vertex => game.adjacencyList[vertex][0])
     .filter(v => v);
 
-  console.log("wine");
-  console.log(verticesForNextTiles);
-  console.log("prok");
+  // console.log("wine");
+  // console.log(verticesForNextTiles);
+  // console.log("prok");
 
   verticesForNextTiles.forEach(v => {
     const path: Path = { currentPath: [startingTileId], nextVertex: v };
@@ -55,7 +55,7 @@ export default function bfs(game: GameState) {
     const path: Path = openSet.shift();
     const subTreeRoot: Vertex = path.nextVertex;
 
-    console.log(count, path.nextVertex, path.currentPath);
+    // console.log(count, path.nextVertex, path.currentPath);
 
     // We found the node we wanted so stop and emit a path.
     if (game.endVertex === subTreeRoot) {
@@ -72,7 +72,7 @@ export default function bfs(game: GameState) {
       .filter(p => p.has(subTreeRoot))
       .map(p => getOppositeEnfOfPath(p, subTreeRoot));
 
-    console.log(verticesReachable);
+    // console.log(verticesReachable);
     // need to check here before we filter out vertexes who lead off board;
     if (new Set(verticesReachable).has(game.endVertex)) {
       completePaths.push(path);
@@ -90,6 +90,5 @@ export default function bfs(game: GameState) {
       }
     });
   }
-  console.log("chicken");
-  console.log(completePaths);
+  return completePaths;
 }
