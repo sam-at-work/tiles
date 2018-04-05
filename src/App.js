@@ -8,8 +8,10 @@ import "./App.css";
 import initialProblemState from "./classes/initialProblemState";
 import type { GameState } from "./types";
 import bfs from "./classes/bfs";
-const boardHeight = 7;
-const boardWidth = 15;
+const boardHeight = 3;
+const boardWidth = 3;
+
+// const tiles =
 
 class App extends Component<{}> {
   constructor({ dispatch }: { dispatch: Function }) {
@@ -17,6 +19,7 @@ class App extends Component<{}> {
 
     const problemState: GameState = initialProblemState(boardHeight, boardWidth);
     console.log(problemState.vertexToTileId);
+    console.log(problemState.idToTileState);
     bfs(problemState);
     dispatch(setInitialState(problemState));
   }

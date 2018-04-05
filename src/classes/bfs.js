@@ -55,11 +55,13 @@ export default function bfs(game: GameState) {
     const path: Path = openSet.shift();
     const subTreeRoot: Vertex = path.nextVertex;
 
+    console.log(count, path.nextVertex, path.currentPath);
+
     // We found the node we wanted so stop and emit a path.
     if (game.endVertex === subTreeRoot) {
       console.log("i dont think we should ever get here :(");
       completePaths.push(path);
-      return;
+      break;
     }
 
     const tileId: TileId = game.vertexToTileId[subTreeRoot];
@@ -70,10 +72,11 @@ export default function bfs(game: GameState) {
       .filter(p => p.has(subTreeRoot))
       .map(p => getOppositeEnfOfPath(p, subTreeRoot));
 
+    console.log(verticesReachable);
     // need to check here before we filter out vertexes who lead off board;
-    if (new Set([verticesReachable]).has(game.endVertex)) {
+    if (new Set(verticesReachable).has(game.endVertex)) {
       completePaths.push(path);
-      return;
+      break;
     }
 
     const verticesForNextTiles = verticesReachable
@@ -82,7 +85,7 @@ export default function bfs(game: GameState) {
 
     verticesForNextTiles.forEach(v => {
       if (!new Set(path.currentPath).has(game.vertexToTileId[v])) {
-        const newPath: Path = { currentPath: [...path.currentPath], nextVertex: v };
+        const newPath: Path = { currentPath: [...path.currentPath, tileId], nextVertex: v };
         openSet.push(newPath);
       }
     });
