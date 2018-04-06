@@ -1,6 +1,6 @@
 // @flow
 
-import { TileFactory, rotateTile } from "./tile";
+import { newTile, rotateTile } from "./tile";
 import type { TileId, Vertex, TileState, GameState } from "../types";
 
 export default function initialGameState(height: number, width: number): GameState {
@@ -33,7 +33,7 @@ export default function initialGameState(height: number, width: number): GameSta
         vertexToTileId[vertexId] = tileId;
       }
 
-      let tile: TileState = new TileFactory(tileId, tileSides, tileSideToVertex).getState();
+      let tile: TileState = newTile(tileId, tileSides, tileSideToVertex);
       tile = rotateTile(tile, Math.floor(Math.random() * tileSides));
 
       // make sure first tile is always connected;

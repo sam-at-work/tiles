@@ -1,42 +1,29 @@
 // @flow
 
-import type { SetOfPaths, ExternalPath, Vertex, Rotation, TileState } from "../types";
+import type { TileId, SetOfPaths, ExternalPath, Vertex, TileState } from "../types";
 
-export class TileFactory {
-  id: number;
-  totalSides: number;
-  tileSideToVertex: { [number]: Vertex };
-  pipeType: number;
-  currentRotation: Rotation;
-  internalPath: Set<number>; // based on pipe rotation - start and end sides.
-  externalPath: Set<Vertex>; // based on pipe rotation - 'any' to get around flow error
-  connected: boolean = false;
+export function newTile(
+  id: TileId,
+  totalSides: number,
+  tileSideToVertex: { [number]: Vertex }
+): TileState {
+  const pipeType: number = Math.floor(Math.random() * totalSides / 2);
+  // based on pipe rotation - start and end sides.
+  const internalPath: Set<number> = new Set([0, pipeType + 1]);
+  // based on internalPath
+  const externalPath: Set<Vertex> = new Set([...internalPath].map(side => tileSideToVertex[side]));
 
-  constructor(id: number, totalSides: number, tileSideToVertex: { [number]: number }) {
-    this.id = id;
-    this.totalSides = totalSides;
-    this.tileSideToVertex = tileSideToVertex;
-
-    this.pipeType = Math.floor(Math.random() * totalSides / 2);
-    this.currentRotation = 0;
-
-    this.internalPath = new Set([0, this.pipeType + 1]);
-    this.externalPath = new Set([...this.internalPath].map(side => tileSideToVertex[side])); // flow error?
-  }
-
-  getState() {
-    return {
-      id: this.id,
-      currentRotation: this.currentRotation,
-      internalPath: this.internalPath,
-      externalPath: this.externalPath,
-      totalSides: this.totalSides,
-      tileSideToVertex: this.tileSideToVertex,
-      connected: false,
-      animationDelay: 0,
-      pipeType: this.pipeType
-    };
-  }
+  return {
+    animationDelay: 0,
+    connected: false,
+    currentRotation: 0,
+    externalPath,
+    id,
+    internalPath,
+    pipeType,
+    totalSides,
+    tileSideToVertex
+  };
 }
 
 // https://stackoverflow.com/a/4467559
