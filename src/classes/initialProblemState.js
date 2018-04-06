@@ -1,7 +1,7 @@
 // @flow
 
 import { TileFactory, rotateTile } from "./tile";
-import type { Vertex, TileState, GameState } from "../types";
+import type { TileId, Vertex, TileState, GameState } from "../types";
 
 export default function initialGameState(height: number, width: number): GameState {
   const tileSides: number = 4; // make configurable?
@@ -15,19 +15,18 @@ export default function initialGameState(height: number, width: number): GameSta
   const totalNodes: number = height * width * tileSides; // one node on each side of each tile
   const adjacencyList: Array<Array<number>> = Array.from({ length: totalNodes }, () => []);
 
-  let nextTileId = 0;
-  let nextVertexId = 0;
+  let nextTileId: Vertex = 0;
+  let nextVertexId: TileId = 0;
+  let isStartingTile: boolean = false;
 
   for (let row = 0; row < height; row++) {
     for (let col = 0; col < width; col++) {
-      let isStartingTile = false;
-      const tileId = nextTileId++;
-
-      const tileSideToVertex: { [number]: number } = {};
+      const tileId: TileId = nextTileId++;
+      const tileSideToVertex: { [number]: Vertex } = {};
 
       // assign vertices to each side of the tile
       for (let side = 0; side < tileSides; side++) {
-        const vertexId = nextVertexId++;
+        const vertexId: Vertex = nextVertexId++;
         if (vertexId == startingVertex) isStartingTile = true;
 
         tileSideToVertex[side] = vertexId;
@@ -39,6 +38,7 @@ export default function initialGameState(height: number, width: number): GameSta
 
       // make sure first tile is always connected;
       if (isStartingTile) {
+        isStartingTile = false;
         while (!tile.externalPath.has(startingVertex)) {
           tile = rotateTile(tile, 1);
         }
@@ -53,14 +53,14 @@ export default function initialGameState(height: number, width: number): GameSta
 
       // connect tile to prev column
       if (col > 0) {
-        const prevColTile = idToTileState[tileId - 1];
+        const prevColTile: TileState = idToTileState[tileId - 1];
         adjacencyList[tileSideToVertex[3]].push(prevColTile.tileSideToVertex[1]);
         adjacencyList[prevColTile.tileSideToVertex[1]].push(tileSideToVertex[3]);
       }
 
       // connect tile to pre row
       if (row > 0) {
-        const prevRowTile = idToTileState[tileId - width];
+        const prevRowTile: TileState = idToTileState[tileId - width];
         adjacencyList[tileSideToVertex[0]].push(prevRowTile.tileSideToVertex[2]);
         adjacencyList[prevRowTile.tileSideToVertex[2]].push(tileSideToVertex[0]);
       }

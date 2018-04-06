@@ -1,8 +1,8 @@
 // @flow
 
-import type { GameState } from "../types";
+import type { GameState, TileId } from "../types";
 
-export const rotateTile = (id: number, rotation: number) => ({
+export const rotateTile = (id: TileId, rotation: number) => ({
   type: "ROTATE_TILE",
   id,
   rotation
