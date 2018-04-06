@@ -1,10 +1,8 @@
 // @flow
-
-import type { TileId, SetOfPaths, Vertex, GameState, TileState } from "../types";
-
 import { getAllPaths } from "src/classes/tile";
 import { getOppositeEnfOfPath } from "./tile";
 
+import type { TileId, SetOfPaths, Vertex, GameState, TileState } from "../types";
 type Path = {
   currentPath: Array<TileId>,
   nextVertex: Vertex
@@ -32,6 +30,7 @@ export default function bfs(game: GameState) {
       continue;
     }
 
+    // for every vertex reachable on other tiles that haven't been visited yet, add to a new path.
     verticesReachableOnTile
       .map(v => game.adjacencyList[v][0])
       .filter(v => v) // filter any undefined (they head off board)
