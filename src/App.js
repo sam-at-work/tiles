@@ -9,7 +9,7 @@ import initialProblemState from "./classes/initialProblemState";
 import type { GameState } from "./types";
 import bfs from "./classes/bfs";
 const boardHeight = 5;
-const boardWidth = 2;
+const boardWidth = 4;
 
 // const tiles =
 
@@ -23,8 +23,10 @@ class App extends Component<{}> {
       // console.log(problemState.vertexToTileId);
       // console.log(problemState.idToTileState);
       solutions = bfs(problemState);
-      // } while (solutions.length == 0 || solutions.every(s => s.currentPath.length < boardHeight * 2));
-    } while (solutions.length == 0);
+    } while (
+      solutions.length == 0 ||
+      solutions.every(s => s.currentPath.length < Math.min(boardHeight, boardWidth) * 2)
+    );
 
     console.log(solutions.length);
     console.log(solutions);
