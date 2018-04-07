@@ -82,7 +82,7 @@ function FunctionalTile({
 function mapStateToProps(state, ownProps) {
   return {
     ...ownProps.tile,
-    rotationTime: state.rotationTime
+    rotationTime: state.board.rotationTime,
   };
 }
 

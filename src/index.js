@@ -1,12 +1,13 @@
 import React from "react";
 import { render } from "react-dom";
 import { Provider } from "react-redux";
-import { createStore } from "redux";
+import { combineReducers, createStore } from "redux";
 
 import "./index.css";
 import App from "./App";
 import registerServiceWorker from "./registerServiceWorker";
-import gameReducer from "./reducers";
+import boardReducer from "./reducers/board-reducer";
+import gameReducer from "./reducers/game-reducer";
 
 import "add-to-homescreen/addtohomescreen.css";
 import "add-to-homescreen/addtohomescreen";
@@ -27,7 +28,7 @@ if (process.env.NODE_ENV !== "production") {
 // };
 
 const store = createStore(
-  gameReducer,
+  combineReducers({ board: boardReducer, game: gameReducer }),
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 

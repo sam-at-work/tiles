@@ -15,15 +15,15 @@ class App extends Component<{}> {
   constructor({ dispatch }: { dispatch: Function }) {
     super();
 
-    const { board, solutions, shortestPathLength }: BoardMeta = boardGererator(
-      boardHeight,
-      boardWidth,
-      200
-    );
-
-    console.log(solutions);
-    console.log(shortestPathLength);
-    dispatch(setInitialState(board));
+    // const { board, solutions, shortestPathLength }: BoardMeta = boardGererator(
+    //   boardHeight,
+    //   boardWidth,
+    //   200
+    // );
+    //
+    // console.log(solutions);
+    // console.log(shortestPathLength);
+    // dispatch(setInitialState(board));
   }
 
   render() {

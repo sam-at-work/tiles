@@ -12,3 +12,7 @@ export const setInitialState = (board: BoardState) => ({
   type: "SET_INITIAL_STATE",
   board,
 });
+
+export const startGame = () => ({
+  type: "START_GAME",
+});
