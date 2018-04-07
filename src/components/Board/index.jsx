@@ -26,7 +26,6 @@ const Board = ({ idToTileState, width, height, pathComplete }) => {
 
         {Object.values(idToTileState).map(tile => <Tile key={tile.id} tile={tile} />)}
       </div>
-      {pathComplete ? <div className={"game-over"}>Game Over!</div> : null}
     </BoardWrapper>
   );
 };

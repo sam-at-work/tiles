@@ -32,3 +32,7 @@ export const startGame = () => {
     board,
   };
 };
+
+// export const levelComplete = () => ({
+//   type: "LEVEL_COMPLETE",
+// });

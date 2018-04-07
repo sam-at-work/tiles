@@ -47,16 +47,4 @@ export default styled.div`
     grid-column-start: 2;
     grid-column-end: -2;
   }
-
-  .game-over {
-    position: fixed;
-    display: flex;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    align-items: center;
-    justify-content: center;
-    background-color: rgba(255, 0, 0, 0.2);
-  }
 `;
