@@ -11,7 +11,7 @@ export default function(state: GameState, action: { type: string, [string]: any 
     case "ROTATE_TILE":
       const newTiles: Tiles = {
         ...state.idToTileState,
-        [action.id]: rotateTile(state.idToTileState[action.id], action.rotation)
+        [action.id]: rotateTile(state.idToTileState[action.id], action.rotation),
       };
 
       return updateBoard(state, newTiles);

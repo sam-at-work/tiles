@@ -34,5 +34,5 @@ export type TileState = {
   tileSideToVertex: { [number]: Vertex },
   connected: boolean,
   animationDelay: number | null,
-  pipeType: number
+  pipeType: number,
 };

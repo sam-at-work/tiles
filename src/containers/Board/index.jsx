@@ -36,7 +36,7 @@ const mapStateToProps = state => ({
   idToTileState: state.idToTileState,
   width: state.width,
   height: state.height,
-  pathComplete: state.pathComplete
+  pathComplete: state.pathComplete,
 });
 
 export default connect(mapStateToProps)(Board);
