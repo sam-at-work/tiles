@@ -3,10 +3,15 @@ import { render } from "react-dom";
 import { Provider } from "react-redux";
 import { createStore, combineReducers } from "redux";
 
+import "add-to-homescreen/addtohomescreen.css";
+import "add-to-homescreen/addtohomescreen";
+
 import "./index.css";
 import App from "./App";
 import registerServiceWorker from "./registerServiceWorker";
 import problemReducer from "./reducers";
+
+window.addToHomescreen({ mandatory: true, displayPace: 0, lifespan: 0 });
 
 // https://github.com/gaearon/redux-devtools/issues/310
 if (process.env.NODE_ENV !== "production") {
