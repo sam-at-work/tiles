@@ -8,8 +8,8 @@ import styled from "styled-components";
 import React from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import TileDebugger from "./tile-debugger";
 
+import TileDebugger from "./tile-debugger";
 import { rotateTile } from "src/actionCreators";
 
 const debug = true;
@@ -17,7 +17,6 @@ const debug = true;
 const Tile = styled.div`
   display: inline-block;
   position: relative;
-  // user-select: none; // disable highlighting on phones - not working TODO check this
   padding-bottom: 100%; // 1:1 aspect ratio hack
   cursor: pointer;
 

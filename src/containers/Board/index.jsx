@@ -7,31 +7,31 @@ import brewery from "./brewery.png"; // Tell Webpack this JS file uses this imag
 import pub from "./pub.png"; // Tell Webpack this JS file uses this image
 
 const BoardWrapper = styled.div`
-  max-width: ${props => props.width / (props.height + 1) * 100}vh;
+  --grid-gap: ${props => (props.width * props.height > 9 ? "5px" : "10px")};
+  @media (min-width: 600px) {
+    --grid-gap: ${props => (props.width * props.height > 9 ? "8px" : "12px")};
+  }
+
+  max-width: calc(
+    ${props => props.tileRatio * 100}vh - ${props => props.gapRatio} * var(--grid-gap)
+  );
   margin-left: auto;
   margin-right: auto;
 
   .grid {
-    touch-action: manipulation; // try stop ios safari zooming in
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0); // remove stupid grey background ios on click
+    // make these global
+    touch-action: manipulation; // stop ios safari zooming in
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0); // remove grey background in ios safari on click
+    user-select: none; // make global - stops text from being selected in debug mode
 
     display: grid;
     grid-template-columns: repeat(${props => props.width}, 1fr);
-    //grid-gap: 10px;
-    grid-gap: 5px; // much better when lots of sqaures
-    user-select: none;
-
-    @media (max-width: 600px) {
-      grid-gap: 5px;
-    }
+    grid-gap: var(--grid-gap);
   }
 
   .location {
     align-self: end; // make locations appear aligned to bottom of cell;
     position: relative;
-    //grid-column-start: 1;
-    //grid-column-end: 1;
-    //display: inline-block;
 
     //width: 100%;
     //content: "";
@@ -75,8 +75,15 @@ const BoardWrapper = styled.div`
 `;
 
 const Board = ({ idToTileState, width, height, pathComplete }) => {
+  // NOTE here height is height of tiles.
+  // actual height of board is height + 1 for the top row with locations.
+
+  const tileRatio = width / (height + 1); // row and col ratio
+  // I have no idea why or how this gapRatio works - but it does!
+  const gapRatio = 1 - width / height; // grid gap ratio
+
   return (
-    <BoardWrapper width={width} height={height}>
+    <BoardWrapper width={width} height={height} tileRatio={tileRatio} gapRatio={gapRatio}>
       <div className="grid">
         <div className="location brewery">
           <img src={brewery} />

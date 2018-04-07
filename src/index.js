@@ -13,6 +13,12 @@ if (process.env.NODE_ENV !== "production") {
   import("set.prototype.tojson");
 }
 
+// https://coderwall.com/p/w_likw/enable-disable-scrolling-in-iphone-ipad-s-safari
+// disables all momentum scrolling (ios always) desktop when bug overflow
+// document.ontouchmove = function(e) {
+//   e.preventDefault();
+// };
+
 // const rootReducer = combineReducers({ board });
 const store = createStore(
   problemReducer,

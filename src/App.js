@@ -8,7 +8,7 @@ import "./App.css";
 import initialProblemState from "./classes/initialProblemState";
 import type { GameState } from "./types";
 import bfs from "./classes/bfs";
-const boardHeight = 5;
+const boardHeight = 7;
 const boardWidth = 4;
 
 // const tiles =
