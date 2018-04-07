@@ -6,9 +6,9 @@ import { connect } from "react-redux";
 import Board from "src/containers/Board";
 import { setInitialState } from "src/actionCreators";
 import "./App.css";
-import initialProblemState from "./classes/initialProblemState";
+import initialProblemState from "./functions/game-state";
 import type { GameState } from "./types";
-import bfs from "./classes/bfs";
+import bfs from "./functions/bfs";
 
 const boardHeight = 13;
 const boardWidth = 5;

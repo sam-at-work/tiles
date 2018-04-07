@@ -1,7 +1,7 @@
 // @flow
 
 import type { Vertex, Tiles, GameState, TileState } from "src/types";
-import { rotateTile, getOppositeEnfOfPath } from "../classes/tile";
+import { rotateTile, getOppositeEnfOfPath } from "../functions/tile";
 
 export default function(state: GameState, action: { type: string, [string]: any }) {
   switch (action.type) {

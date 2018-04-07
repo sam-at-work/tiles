@@ -3,7 +3,7 @@
 import { newTile, rotateTile } from "./tile";
 import type { TileId, Vertex, TileState, GameState } from "../types";
 
-export default function initialGameState(height: number, width: number): GameState {
+export default function newGameState(height: number, width: number): GameState {
   const tileSides: number = 4; // make configurable?
   const rotationTime: number = 750; //ms
   const startingVertex: Vertex = 0; // make configurable?;

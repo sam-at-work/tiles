@@ -1,5 +1,5 @@
 // @flow
-import { getAllPaths } from "src/classes/tile";
+import { getAllPaths } from "src/functions/tile";
 import { getOppositeEnfOfPath } from "./tile";
 
 import type { TileId, SetOfPaths, Vertex, GameState, TileState } from "../types";
