@@ -13,15 +13,16 @@ export type ExternalPath = Set<Vertex>;
 // export type AdjacencyList = Array<Array<number>>;
 
 export type GameState = {
-  startingVertex: number,
-  endVertex: number,
-  vertexToTileId: { [Vertex]: number },
   adjacencyList: Array<Array<Vertex>>,
+  endVertex: number,
+  gameStarted: boolean,
+  height: number,
   idToTileState: { [number]: TileState },
   pathComplete: boolean,
+  rotationTime: number,
+  startingVertex: number,
+  vertexToTileId: { [Vertex]: number },
   width: number,
-  height: number,
-  rotationTime: number
 };
 
 export type TileState = {

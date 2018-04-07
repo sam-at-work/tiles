@@ -79,14 +79,15 @@ export function newGameState(height: number, width: number): GameState {
   if (endVertex === -1) throw Error("End vertex not set");
 
   return {
-    startingVertex,
-    endVertex,
-    vertexToTileId,
     adjacencyList,
+    endVertex,
+    gameStarted: false,
+    height,
     idToTileState,
     pathComplete: false,
+    rotationTime,
+    startingVertex,
     width,
-    height,
-    rotationTime
+    vertexToTileId,
   };
 }
