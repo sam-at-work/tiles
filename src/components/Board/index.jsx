@@ -1,11 +1,11 @@
 import React from "react";
-import Tile from "src/components/Tile";
+import Tile from "src/components/Tile/index";
 import { connect } from "react-redux";
 
 import BoardWrapper from "./styles";
 import brewery from "./images/brewery.png"; // Tell Webpack this JS file uses this image
 import pub from "./images/pub.png";
-import { startGame } from "../../actionCreators"; // Tell Webpack this JS file uses this image
+import { startGame } from "../../actionCreators/index"; // Tell Webpack this JS file uses this image
 
 const Board = ({ idToTileState, width, height, pathComplete, gameStarted, dispatch }) => {
   // NOTE here height is height of tiles.
