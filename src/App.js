@@ -5,9 +5,8 @@ import { connect } from "react-redux";
 
 import Board from "src/containers/Board";
 import { setInitialState } from "src/actionCreators";
-import { newBoardState } from "./functions/board";
-import type { Paths, BoardState } from "./types";
-import bfs from "./functions/bfs";
+import { boardGererator } from "./functions/board";
+import type { BoardMeta } from "./types";
 
 const boardHeight = 9;
 const boardWidth = 9;
@@ -16,33 +15,15 @@ class App extends Component<{}> {
   constructor({ dispatch }: { dispatch: Function }) {
     super();
 
-    const goodGames: Array<{ game: BoardState, solutions: Paths, shortestPathLength: number }> = [];
-
-    do {
-      const game: BoardState = newBoardState(boardHeight, boardWidth);
-      const solutions: Paths = bfs(game);
-      if (
-        solutions.length &&
-        solutions.every(s => s.length > Math.min(boardHeight, boardWidth) * 2)
-      ) {
-        goodGames.push({
-          game,
-          solutions,
-          shortestPathLength: solutions.reduce(
-            (acc, path) => Math.min(acc, path.length),
-            Number.MAX_VALUE
-          ),
-        });
-      }
-    } while (goodGames.length < 200);
-
-    const { shortestPathLength, game, solutions } = goodGames.reduce(
-      (acc, cur) => (acc.shortestPathLength > cur.shortestPathLength ? acc : cur)
+    const { board, solutions, shortestPathLength }: BoardMeta = boardGererator(
+      boardHeight,
+      boardWidth,
+      200
     );
 
     console.log(solutions);
     console.log(shortestPathLength);
-    dispatch(setInitialState(game));
+    dispatch(setInitialState(board));
   }
 
   render() {

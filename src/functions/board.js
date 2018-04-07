@@ -19,11 +19,11 @@ export function boardGererator(
     counter++;
     const board: BoardState = newBoardState(boardHeight, boardWidth);
     const solutions: Paths = bfs(board);
-    if (solutions.length) {
+    if (solutions.length == 0) {
       solutionlessBoards++;
-      continue;
-    }
-    if (solutions.every(s => s.length > Math.min(boardHeight, boardWidth) * 2)) {
+    } else if (!solutions.every(s => s.length > Math.min(boardHeight, boardWidth) * 2)) {
+      excluded++;
+    } else {
       validBoards.push({
         board,
         solutions,
@@ -32,14 +32,12 @@ export function boardGererator(
           Number.MAX_VALUE
         ),
       });
-    } else {
-      excluded++;
     }
   } while (validBoards.length < numberToGenerate);
 
   console.info(`Generated ${validBoards.length} valid board states in ${counter} iterations.`);
   console.info(`Generated ${solutionlessBoards} solution-less board states.`);
-  console.info(`${excluded} board states were excluded for too short solutions.`);
+  console.info(`${excluded} board states were excluded for having too short solutions.`);
 
   return validBoards.reduce(
     (acc, cur) => (acc.shortestPathLength > cur.shortestPathLength ? acc : cur)
