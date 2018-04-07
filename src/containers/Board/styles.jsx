@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export default styled.div`
-  --grid-gap: ${props => (props.width * props.height > 9 ? "5px" : "10px")};
+  --grid-gap: ${props => (props.width * props.height > 9 ? "2px" : "5px")};
   @media (min-width: 600px) {
     --grid-gap: ${props => (props.width * props.height > 9 ? "8px" : "12px")};
   }

@@ -2,9 +2,11 @@
 export type TileId = number;
 export type Rotation = number;
 export type Vertex = number;
+export type Path = Array<TileId>;
+export type Paths = Array<Path>;
 
 export type Tiles = {
-  [number]: TileState
+  [number]: TileState,
 };
 
 export type SetOfPaths = Set<Set<Vertex>>;
