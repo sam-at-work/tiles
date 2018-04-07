@@ -12,7 +12,7 @@ import { bindActionCreators } from "redux";
 import TileDebugger from "./tile-debugger";
 import { rotateTile } from "src/actionCreators";
 
-const debug = true;
+const debug = false;
 
 const Tile = styled.div`
   display: inline-block;

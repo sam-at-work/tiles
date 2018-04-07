@@ -80,7 +80,7 @@ const Board = ({ idToTileState, width, height, pathComplete }) => {
 
   const tileRatio = width / (height + 1); // row and col ratio
   // I have no idea why or how this gapRatio works - but it does!
-  const gapRatio = 1 - width / height; // grid gap ratio
+  const gapRatio = 1 - tileRatio; // grid gap ratio
 
   return (
     <BoardWrapper width={width} height={height} tileRatio={tileRatio} gapRatio={gapRatio}>
