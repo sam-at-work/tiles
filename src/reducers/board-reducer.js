@@ -1,18 +1,11 @@
 // @flow
 
-import type { BoardMeta, Vertex, Tiles, BoardState, TileState } from "src/types";
+import type { Vertex, Tiles, BoardState, TileState } from "src/types";
 import { rotateTile, getOppositeEnfOfPath } from "../functions/tile";
-import { boardGererator } from "../functions/board";
 
-const { board: startingBoard }: BoardMeta = boardGererator(7, 7, 1);
-const defaultState = updateBoard(startingBoard, startingBoard.idToTileState);
-
-export default function board(
-  state: BoardState = defaultState,
-  action: { type: string, [string]: any }
-) {
+export default function board(state: BoardState = null, action: { type: string, [string]: any }) {
   switch (action.type) {
-    case "SET_INITIAL_STATE":
+    case "START_GAME":
       return updateBoard(action.board, action.board.idToTileState);
 
     case "ROTATE_TILE":

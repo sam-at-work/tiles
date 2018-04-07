@@ -4,21 +4,11 @@ import { connect } from "react-redux";
 
 import BoardWrapper from "./styles";
 import brewery from "./images/brewery.png"; // Tell Webpack this JS file uses this image
-import pub from "./images/pub.png";
-import { startGame } from "../../actionCreators/index"; // Tell Webpack this JS file uses this image
+import pub from "./images/pub.png"; // Tell Webpack this JS file uses this image
 
-const Board = ({ idToTileState, width, height, pathComplete, gameStarted, dispatch }) => {
+const Board = ({ idToTileState, width, height, pathComplete }) => {
   // NOTE here height is height of tiles.
   // actual height of board is height + 1 for the top row with locations.
-  if (!gameStarted) {
-    return (
-      <div>
-        Ready to play?
-        <button onClick={() => dispatch(startGame())}>Yes!</button>
-      </div>
-    );
-  }
-
   const tileRatio = width / (height + 1); // row and col ratio
   // I have no idea why or how this gapRatio works - but it does!
   const gapRatio = 1 - tileRatio; // grid gap ratio
@@ -42,11 +32,7 @@ const Board = ({ idToTileState, width, height, pathComplete, gameStarted, dispat
 };
 
 const mapStateToProps = state => ({
-  idToTileState: state.board.idToTileState,
-  width: state.board.width,
-  height: state.board.height,
-  pathComplete: state.board.pathComplete,
-  gameStarted: state.game.gameStarted,
+  ...state.board,
 });
 
 export default connect(mapStateToProps)(Board);

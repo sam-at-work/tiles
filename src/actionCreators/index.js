@@ -1,6 +1,7 @@
 // @flow
 
-import type { BoardState, TileId } from "../types";
+import type { BoardMeta, BoardState, TileId } from "../types";
+import { boardGererator } from "../functions/board";
 
 export const rotateTile = (id: TileId, rotation: number) => ({
   type: "ROTATE_TILE",
@@ -13,6 +14,21 @@ export const setInitialState = (board: BoardState) => ({
   board,
 });
 
-export const startGame = () => ({
-  type: "START_GAME",
-});
+export const startGame = () => {
+  const boardHeight = 3; //9;
+  const boardWidth = 3; //9;
+
+  const { board, solutions, shortestPathLength }: BoardMeta = boardGererator(
+    boardHeight,
+    boardWidth,
+    1 // 200
+  );
+
+  console.log(solutions);
+  console.log(shortestPathLength);
+
+  return {
+    type: "START_GAME",
+    board,
+  };
+};

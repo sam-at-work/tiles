@@ -4,7 +4,7 @@ import { Provider } from "react-redux";
 import { combineReducers, createStore } from "redux";
 
 import "./index.css";
-import Board from "./components/Board";
+import App from "./App";
 import registerServiceWorker from "./registerServiceWorker";
 import boardReducer from "./reducers/board-reducer";
 import gameReducer from "./reducers/game-reducer";
@@ -34,7 +34,7 @@ const store = createStore(
 
 render(
   <Provider store={store}>
-    <Board />
+    <App />
   </Provider>,
   document.getElementById("root")
 );
