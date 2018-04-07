@@ -1,14 +1,14 @@
 // @flow
 
-import type { GameState, TileId } from "../types";
+import type { BoardState, TileId } from "../types";
 
 export const rotateTile = (id: TileId, rotation: number) => ({
   type: "ROTATE_TILE",
   id,
-  rotation
+  rotation,
 });
 
-export const setInitialState = (problem: GameState) => ({
+export const setInitialState = (board: BoardState) => ({
   type: "SET_INITIAL_STATE",
-  problem
+  board,
 });

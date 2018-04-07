@@ -1,7 +1,50 @@
 // @flow
 
 import { newTile, rotateTile } from "./tile";
-import type { TileId, Vertex, TileState, GameState } from "../types";
+import bfs from "./bfs";
+
+import type { BoardMeta, TileId, Vertex, TileState, BoardState, Paths } from "../types";
+
+export function boardGererator(
+  boardHeight: number,
+  boardWidth: number,
+  numberToGenerate: number
+): BoardMeta {
+  const validBoards: Array<BoardMeta> = [];
+  let counter = 0;
+  let excluded = 0;
+  let solutionlessBoards = 0;
+
+  do {
+    counter++;
+    const board: BoardState = newBoardState(boardHeight, boardWidth);
+    const solutions: Paths = bfs(board);
+    if (solutions.length) {
+      solutionlessBoards++;
+      continue;
+    }
+    if (solutions.every(s => s.length > Math.min(boardHeight, boardWidth) * 2)) {
+      validBoards.push({
+        board,
+        solutions,
+        shortestPathLength: solutions.reduce(
+          (acc, path) => Math.min(acc, path.length),
+          Number.MAX_VALUE
+        ),
+      });
+    } else {
+      excluded++;
+    }
+  } while (validBoards.length < numberToGenerate);
+
+  console.info(`Generated ${validBoards.length} valid board states in ${counter} iterations.`);
+  console.info(`Generated ${solutionlessBoards} solution-less board states.`);
+  console.info(`${excluded} board states were excluded for too short solutions.`);
+
+  return validBoards.reduce(
+    (acc, cur) => (acc.shortestPathLength > cur.shortestPathLength ? acc : cur)
+  );
+}
 
 /**
  * When w=2, total-paths=h
@@ -10,9 +53,7 @@ import type { TileId, Vertex, TileState, GameState } from "../types";
  *
  * So we conclude that max-paths = h^(w-1)
  */
-export function gameGererator() {}
-
-export function newGameState(height: number, width: number): GameState {
+export function newBoardState(height: number, width: number): BoardState {
   const tileSides: number = 4; // make configurable?
   const rotationTime: number = 750; //ms
   const startingVertex: Vertex = 0; // make configurable?;

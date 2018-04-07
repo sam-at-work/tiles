@@ -14,7 +14,7 @@ export type SetOfPaths = Set<Set<Vertex>>;
 export type ExternalPath = Set<Vertex>;
 // export type AdjacencyList = Array<Array<number>>;
 
-export type GameState = {
+export type BoardState = {
   adjacencyList: Array<Array<Vertex>>,
   endVertex: number,
   gameStarted: boolean,
@@ -25,6 +25,12 @@ export type GameState = {
   startingVertex: number,
   vertexToTileId: { [Vertex]: number },
   width: number,
+};
+
+export type BoardMeta = {
+  board: BoardState,
+  solutions: Paths,
+  shortestPathLength: number,
 };
 
 export type TileState = {

@@ -1,12 +1,12 @@
 // @flow
 
-import type { Vertex, Tiles, GameState, TileState } from "src/types";
+import type { Vertex, Tiles, BoardState, TileState } from "src/types";
 import { rotateTile, getOppositeEnfOfPath } from "../functions/tile";
 
-export default function(state: GameState, action: { type: string, [string]: any }) {
+export default function(state: BoardState, action: { type: string, [string]: any }) {
   switch (action.type) {
     case "SET_INITIAL_STATE":
-      return updateBoard(action.problem, action.problem.idToTileState);
+      return updateBoard(action.board, action.board.idToTileState);
 
     case "ROTATE_TILE":
       const newTiles: Tiles = {
@@ -28,7 +28,7 @@ export default function(state: GameState, action: { type: string, [string]: any 
  * @param idToTileState
  * @returns {{startingVertex: number, endVertex: number, vertexToTileId: {[p: number]: number}, adjacencyList: Array<Array<number>>, idToTileState: {[p: number]: TileState}, pathComplete: boolean, width: number, height: number, rotationTime: number}}
  */
-function updateBoard(state: GameState, idToTileState: Tiles): GameState {
+function updateBoard(state: BoardState, idToTileState: Tiles): BoardState {
   const { adjacencyList, startingVertex, vertexToTileId, rotationTime } = state;
 
   // disconnect all tiles

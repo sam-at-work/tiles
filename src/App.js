@@ -5,8 +5,8 @@ import { connect } from "react-redux";
 
 import Board from "src/containers/Board";
 import { setInitialState } from "src/actionCreators";
-import { newGameState } from "./functions/game-state";
-import type { Paths, GameState } from "./types";
+import { newBoardState } from "./functions/board";
+import type { Paths, BoardState } from "./types";
 import bfs from "./functions/bfs";
 
 const boardHeight = 9;
@@ -16,10 +16,10 @@ class App extends Component<{}> {
   constructor({ dispatch }: { dispatch: Function }) {
     super();
 
-    const goodGames: Array<{ game: GameState, solutions: Paths, shortestPathLength: number }> = [];
+    const goodGames: Array<{ game: BoardState, solutions: Paths, shortestPathLength: number }> = [];
 
     do {
-      const game: GameState = newGameState(boardHeight, boardWidth);
+      const game: BoardState = newBoardState(boardHeight, boardWidth);
       const solutions: Paths = bfs(game);
       if (
         solutions.length &&
