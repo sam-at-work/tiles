@@ -10,7 +10,7 @@ import gameReducer from "./reducers";
 
 import "add-to-homescreen/addtohomescreen.css";
 import "add-to-homescreen/addtohomescreen";
-window.addToHomescreen({ mandatory: true, displayPace: 0, lifespan: 0 });
+window.addToHomescreen({ displayPace: 0, lifespan: 0 });
 
 // - https://github.com/gaearon/redux-devtools/issues/310
 if (process.env.NODE_ENV !== "production") {
