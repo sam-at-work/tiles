@@ -3,7 +3,16 @@
 import { newTile, rotateTile } from "./tile";
 import type { TileId, Vertex, TileState, GameState } from "../types";
 
-export default function newGameState(height: number, width: number): GameState {
+/**
+ * When w=2, total-paths=h
+ * When w=3, total-paths=h^2
+ * When w=4, total-paths=h^3 approx.
+ *
+ * So we conclude that max-paths = h^(w-1)
+ */
+export function gameGererator() {}
+
+export function newGameState(height: number, width: number): GameState {
   const tileSides: number = 4; // make configurable?
   const rotationTime: number = 750; //ms
   const startingVertex: Vertex = 0; // make configurable?;
