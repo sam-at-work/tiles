@@ -69,7 +69,6 @@ export default styled.div`
     background-position-y: bottom;
     background-position-x: center;
     grid-row: 1;
-    grid-column: ${props => 2 + Math.floor(Math.random() * (props.width - 2))};
   }
 
   .placeHolder {
