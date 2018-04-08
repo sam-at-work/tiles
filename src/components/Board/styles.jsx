@@ -9,19 +9,10 @@ export default styled.div`
   max-width: calc(
     ${props => props.tileRatio * 100}vh - ${props => props.gapRatio} * var(--grid-gap)
   );
-  margin-left: auto;
-  margin-right: auto;
 
-  .grid {
-    // make these global
-    touch-action: manipulation; // stop ios safari zooming in
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0); // remove grey background in ios safari on click
-    user-select: none; // make global - stops text from being selected in debug mode
-
-    display: grid;
-    grid-template-columns: repeat(${props => props.width}, 1fr);
-    grid-gap: var(--grid-gap);
-  }
+  display: grid;
+  grid-template-columns: repeat(${props => props.width}, 1fr);
+  grid-gap: var(--grid-gap);
 
   .location {
     align-self: end; // make locations appear aligned to bottom of cell;

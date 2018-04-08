@@ -15,7 +15,6 @@ import { rotateTile } from "src/actionCreators";
 const debug = false;
 
 const Tile = styled.div`
-  display: inline-block;
   position: relative;
   padding-bottom: 100%; // 1:1 aspect ratio hack
   cursor: pointer;
@@ -42,8 +41,8 @@ const Tile = styled.div`
 const clipPaths = {
   "4": [
     "polygon(45% 0, 55% 0, 57% 43%, 100% 45%, 100% 55%, 50% 50%, 45% 0)",
-    "polygon(45% 0, 55% 0, 55% 100% , 45% 100% , 45% 0)"
-  ]
+    "polygon(45% 0, 55% 0, 55% 100% , 45% 100% , 45% 0)",
+  ],
 };
 
 function FunctionalTile({

@@ -25,8 +25,10 @@ const LevelComplete = ({ handleClick }) => (
 );
 
 const AppStyles = styled.div`
-  margin-left: auto;
-  margin-right: auto;
+  .grid {
+    margin-left: auto;
+    margin-right: auto;
+  }
 
   .hud {
     position: fixed;
@@ -46,7 +48,7 @@ function App({ gameStarted, pathComplete, level, dispatch }) {
   }
   return (
     <AppStyles>
-      <Board />
+      <Board className="grid" />
       <HUD className="hud" level={level} />
       {pathComplete ? <LevelComplete handleClick={loadLevel} /> : null}
     </AppStyles>

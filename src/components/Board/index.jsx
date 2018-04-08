@@ -6,7 +6,7 @@ import BoardWrapper from "./styles";
 import brewery from "./images/brewery.png"; // Tell Webpack this JS file uses this image
 import pub from "./images/pub.png"; // Tell Webpack this JS file uses this image
 
-const Board = ({ idToTileState, width, height, pathComplete }) => {
+const Board = ({ idToTileState, width, height, pathComplete, ...props }) => {
   // NOTE here height is height of tiles.
   // actual height of board is height + 1 for the top row with locations.
   const tileRatio = width / (height + 1); // row and col ratio
@@ -14,18 +14,22 @@ const Board = ({ idToTileState, width, height, pathComplete }) => {
   const gapRatio = 1 - tileRatio; // grid gap ratio
 
   return (
-    <BoardWrapper width={width} height={height} tileRatio={tileRatio} gapRatio={gapRatio}>
-      <div className="grid">
-        <div className="location brewery" style={{ paddingBottom: "calc(190 / 265 * 100%)" }}>
-          <img src={brewery} />
-        </div>
-        <div className={"placeHolder"} />
-        <div className="location pub">
-          <img src={pub} />
-        </div>
-
-        {Object.values(idToTileState).map(tile => <Tile key={tile.id} tile={tile} />)}
+    <BoardWrapper
+      {...props}
+      width={width}
+      height={height}
+      tileRatio={tileRatio}
+      gapRatio={gapRatio}
+    >
+      <div className="location brewery" style={{ paddingBottom: "calc(190 / 265 * 100%)" }}>
+        <img src={brewery} />
       </div>
+      <div className="placeHolder" />
+      <div className="location pub">
+        <img src={pub} />
+      </div>
+
+      {Object.values(idToTileState).map(tile => <Tile key={tile.id} tile={tile} />)}
     </BoardWrapper>
   );
 };
