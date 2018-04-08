@@ -22,7 +22,7 @@ export default function bfs(board: BoardState): Paths {
     const allPathsThroughTile: SetOfPaths = getAllPaths(tile);
 
     const verticesReachableOnTile = [...allPathsThroughTile]
-      .filter(p => p.has(subTreeRoot))
+      .filter(p => p.includes(subTreeRoot))
       .map(p => getOppositeEnfOfPath(p, subTreeRoot));
 
     if (verticesReachableOnTile.includes(board.endVertex)) {

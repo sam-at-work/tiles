@@ -9,9 +9,9 @@ export type Tiles = {
   [number]: TileState,
 };
 
-export type SetOfPaths = Set<Set<Vertex>>;
+export type SetOfPaths = Set<Array<Vertex>>;
 
-export type ExternalPath = Set<Vertex>;
+export type ExternalPath = Array<Vertex>;
 // export type AdjacencyList = Array<Array<number>>;
 
 export type BoardState = {
@@ -36,7 +36,7 @@ export type BoardMeta = {
 export type TileState = {
   id: number,
   currentRotation: Rotation,
-  internalPath: Set<number>,
+  internalPath: Array<number>,
   externalPath: ExternalPath,
   totalSides: number,
   tileSideToVertex: { [number]: Vertex },

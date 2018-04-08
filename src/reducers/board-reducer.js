@@ -49,7 +49,7 @@ function updateBoard(state: BoardState, idToTileState: Tiles): BoardState {
   while (nextExternalVertex !== undefined) {
     const tileId: number = vertexToTileId[nextExternalVertex];
     const tile: TileState = idToTileState[tileId];
-    const vertexConnectsToPipe = tile.externalPath.has(nextExternalVertex);
+    const vertexConnectsToPipe = tile.externalPath.includes(nextExternalVertex);
     if (!vertexConnectsToPipe) break;
 
     tile.connected = true;

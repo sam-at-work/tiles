@@ -12,11 +12,6 @@ import { store } from "./store";
 
 window.addToHomescreen({ displayPace: 0, lifespan: 0 });
 
-// - https://github.com/gaearon/redux-devtools/issues/310
-// if (process.env.NODE_ENV !== "production") {
-//   import("set.prototype.tojson");
-// }
-
 // - Every time the state changes, log it
 // - Note that subscribe() returns a function for unregistering the listener
 // const unsubscribe = store.subscribe(() => console.log(store.getState()));

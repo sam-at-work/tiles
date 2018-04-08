@@ -47,7 +47,7 @@ export function newBoardState(height: number, width: number): BoardState {
       // make sure first tile is always connected;
       if (isStartingTile) {
         isStartingTile = false;
-        while (!tile.externalPath.has(startingVertex)) {
+        while (!tile.externalPath.includes(startingVertex)) {
           tile = rotateTile(tile, 1);
         }
       }
