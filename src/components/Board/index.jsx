@@ -21,18 +21,23 @@ const Board = ({ idToTileState, width, height, pathComplete, ...props }) => {
       tileRatio={tileRatio}
       gapRatio={gapRatio}
     >
-
-      <div class="ground-bg"></div>
-
-      <div className="location brewery" style={{ paddingBottom: "calc(190 / 265 * 100%)" }}>
-        <img src={brewery} />
+      <div className="locations-wrapper">
+        <div className="grid locations">
+          <div className="location brewery" style={{ paddingBottom: "calc(190 / 265 * 100%)" }}>
+            <img src={brewery} />
+          </div>
+          <div className="placeHolder" />
+          <div className="location pub">
+            <img src={pub} />
+          </div>
+        </div>
       </div>
-      <div className="placeHolder" />
-      <div className="location pub">
-        <img src={pub} />
-      </div>
 
-      {Object.values(idToTileState).map(tile => <Tile key={tile.id} tile={tile} />)}
+      <div className={"tiles-wrapper"}>
+        <div className="grid tiles">
+          {Object.values(idToTileState).map(tile => <Tile key={tile.id} tile={tile} />)}
+        </div>
+      </div>
     </BoardWrapper>
   );
 };

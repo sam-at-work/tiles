@@ -6,23 +6,33 @@ export default styled.div`
     --grid-gap: ${props => (props.width * props.height > 9 ? "8px" : "12px")};
   }
 
-  max-width: calc(
-    ${props => props.tileRatio * 100}vh - ${props => props.gapRatio} * var(--grid-gap)
-  );
+  background-color: saddlebrown;
 
-  display: grid;
-  grid-template-columns: repeat(${props => props.width}, 1fr);
-  grid-gap: var(--grid-gap);
-  position: relative;
+  .locations-wrapper {
+    background-color: lightskyblue;
+  }
 
-  .ground-bg {
-    background-color: saddlebrown;
-    position: absolute;
-    left: -1000px;
-    right: -1000px;
-    grid-column: 1/-1;
-    grid-row: 2;
-    height: 100%;
+  .tiles-wrapper {
+    padding-bottom: var(--grid-gap);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(${props => props.width}, 1fr);
+    margin-left: auto;
+    margin-right: auto;
+
+    max-width: calc(
+      ${props => props.tileRatio * 100}vh - ${props => props.gapRatio} * var(--grid-gap)
+    );
+
+    &.tiles {
+      grid-gap: var(--grid-gap);
+    }
+
+    &.locations {
+      grid-column-gap: var(--grid-gap);
+    }
   }
 
   .location {

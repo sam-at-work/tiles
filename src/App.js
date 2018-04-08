@@ -25,7 +25,9 @@ const LevelComplete = ({ handleClick }) => (
 );
 
 const AppStyles = styled.div`
+  height: 100%; /* to get board background to fill whole screen */
   .board {
+    height: 100%; /* to get board background to fill whole screen */
     margin-left: auto;
     margin-right: auto;
   }
