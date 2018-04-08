@@ -21,6 +21,9 @@ const Board = ({ idToTileState, width, height, pathComplete, ...props }) => {
       tileRatio={tileRatio}
       gapRatio={gapRatio}
     >
+
+      <div class="ground-bg"></div>
+
       <div className="location brewery" style={{ paddingBottom: "calc(190 / 265 * 100%)" }}>
         <img src={brewery} />
       </div>

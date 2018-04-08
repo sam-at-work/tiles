@@ -25,7 +25,7 @@ const LevelComplete = ({ handleClick }) => (
 );
 
 const AppStyles = styled.div`
-  .grid {
+  .board {
     margin-left: auto;
     margin-right: auto;
   }
@@ -48,7 +48,7 @@ function App({ gameStarted, pathComplete, level, shortestPathLength, dispatch })
   }
   return (
     <AppStyles>
-      <Board className="grid" />
+      <Board className="board" />
       <HUD className="hud" level={level} shortestPathLength={shortestPathLength} />
       {pathComplete ? <LevelComplete handleClick={loadLevel} /> : null}
     </AppStyles>

@@ -13,6 +13,17 @@ export default styled.div`
   display: grid;
   grid-template-columns: repeat(${props => props.width}, 1fr);
   grid-gap: var(--grid-gap);
+  position: relative;
+
+  .ground-bg {
+    background-color: saddlebrown;
+    position: absolute;
+    left: -1000px;
+    right: -1000px;
+    grid-column: 1/-1;
+    grid-row: 2;
+    height: 100%;
+  }
 
   .location {
     align-self: end; // make locations appear aligned to bottom of cell;
