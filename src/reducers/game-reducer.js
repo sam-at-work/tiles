@@ -5,8 +5,8 @@ const defaultState = {
 
 export default function game(state = defaultState, action) {
   switch (action.type) {
-    case "START_GAME":
-      return { ...state, gameStarted: true };
+    case "START_LEVEL":
+      return { level: ++state.level, gameStarted: true };
     default:
       return state;
   }

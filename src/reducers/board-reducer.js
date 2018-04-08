@@ -5,7 +5,7 @@ import { rotateTile, getOppositeEnfOfPath } from "../functions/tile";
 
 export default function board(state: BoardState = null, action: { type: string, [string]: any }) {
   switch (action.type) {
-    case "START_GAME":
+    case "START_LEVEL":
       return updateBoard(action.board, action.board.idToTileState);
 
     case "ROTATE_TILE":

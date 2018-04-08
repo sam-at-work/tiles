@@ -3,9 +3,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { startGame } from "./actionCreators";
+import { startLevel } from "./actionCreators";
 import Board from "./components/Board";
 import Message from "./components/Message";
+import { levelGenerator } from "./functions/level-generator";
 
 const WelcomeScreen = ({ handleClick }) => (
   <Message>
@@ -21,11 +22,13 @@ const LevelComplete = ({ handleClick }) => (
   </Message>
 );
 
-function App({ gameStarted, pathComplete, onStartClick, onLevelCompleteClick }) {
+function App({ gameStarted, pathComplete, level, dispatch }) {
+  console.info(`Level ${level}. Go!`);
+  const loadLevel = () => dispatch(startLevel(levelGenerator(level)));
   return (
     <div>
-      {gameStarted ? <Board /> : <WelcomeScreen handleClick={onStartClick} />}
-      {pathComplete ? <LevelComplete handleClick={onLevelCompleteClick} /> : null}
+      {gameStarted ? <Board /> : <WelcomeScreen handleClick={loadLevel} />}
+      {pathComplete ? <LevelComplete handleClick={loadLevel} /> : null}
     </div>
   );
 }
@@ -33,13 +36,14 @@ function App({ gameStarted, pathComplete, onStartClick, onLevelCompleteClick }) 
 const mapStateToProps = state => ({
   gameStarted: state.game.gameStarted,
   pathComplete: state.board ? state.board.pathComplete : null,
+  level: state.game.level,
 });
 
-const mapDispatchToProps = dispatch => {
-  return {
-    onStartClick: () => dispatch(startGame()),
-    onLevelCompleteClick: () => dispatch(startGame()), // update action later to make harder level;
-  };
-};
+// const mapDispatchToProps = dispatch => {
+//   return {
+//     onStartClick: () => dispatch(startGame()),
+//     onLevelCompleteClick: () => dispatch(startGame()), // update action later to make harder level;
+//   };
+// };
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps)(App);
