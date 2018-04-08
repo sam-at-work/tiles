@@ -24,7 +24,9 @@ const LevelComplete = ({ handleClick }) => (
 
 function App({ gameStarted, pathComplete, level, dispatch }) {
   console.info(`Level ${level}. Go!`);
+
   const loadLevel = () => dispatch(startLevel(levelGenerator(level)));
+
   return (
     <div>
       {gameStarted ? <Board /> : <WelcomeScreen handleClick={loadLevel} />}
@@ -38,12 +40,5 @@ const mapStateToProps = state => ({
   pathComplete: state.board ? state.board.pathComplete : null,
   level: state.game.level,
 });
-
-// const mapDispatchToProps = dispatch => {
-//   return {
-//     onStartClick: () => dispatch(startGame()),
-//     onLevelCompleteClick: () => dispatch(startGame()), // update action later to make harder level;
-//   };
-// };
 
 export default connect(mapStateToProps)(App);
