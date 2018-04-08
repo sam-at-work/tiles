@@ -27,6 +27,7 @@ const Board = ({ idToTileState, width, height, pathComplete, ...props }) => {
             <img src={brewery} />
           </div>
           <div className="placeHolder" />
+          <div className="location tree" />
           <div className="location pub">
             <img src={pub} />
           </div>

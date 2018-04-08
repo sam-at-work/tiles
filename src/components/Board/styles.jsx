@@ -1,4 +1,7 @@
 import styled from "styled-components";
+import dirt from "./images/5.png";
+import topDirt from "./images/2.png";
+import tree from "./images/Tree_2.png";
 
 export default styled.div`
   --grid-gap: ${props => (props.width * props.height > 9 ? "2px" : "5px")};
@@ -6,17 +9,21 @@ export default styled.div`
     --grid-gap: ${props => (props.width * props.height > 9 ? "8px" : "12px")};
   }
 
-  background-color: saddlebrown;
+  display: flex;
+  flex-direction: column;
 
   .locations-wrapper {
     background-color: lightskyblue;
   }
 
   .tiles-wrapper {
-    padding-bottom: var(--grid-gap);
+    background-image: url(${topDirt}), url(${dirt});
+    background-repeat: repeat-x, repeat;
+    flex-grow: 1;
   }
 
   .grid {
+    flex: auto;
     display: grid;
     grid-template-columns: repeat(${props => props.width}, 1fr);
     margin-left: auto;
@@ -54,8 +61,20 @@ export default styled.div`
     }
   }
 
+  .tree {
+    display: ${props => (props.width <= 2 ? "none" : "block")};
+    background-image: url(${tree});
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position-y: bottom;
+    background-position-x: center;
+    grid-row: 1;
+    grid-column: ${props => 2 + Math.floor(Math.random() * (props.width - 2))};
+  }
+
   .placeHolder {
     display: ${props => (props.width <= 2 ? "none" : "block")};
+    grid-row: 1;
     grid-column-start: 2;
     grid-column-end: -2;
   }
