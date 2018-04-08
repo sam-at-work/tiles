@@ -22,7 +22,7 @@ export function boardGererator(
       excluded++;
     } else {
       validBoards.push({
-        board,
+        ...board,
         solutions,
         shortestPathLength: solutions.reduce(
           (acc, path) => Math.min(acc, path.length),

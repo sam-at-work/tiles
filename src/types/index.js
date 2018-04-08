@@ -27,8 +27,7 @@ export type BoardState = {
   width: number,
 };
 
-export type BoardMeta = {
-  board: BoardState,
+export type BoardMeta = BoardState & {
   solutions: Paths,
   shortestPathLength: number,
 };

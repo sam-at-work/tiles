@@ -1,6 +1,6 @@
 // @flow
 
-import type { BoardState, TileId } from "../types";
+import type { BoardMeta, TileId } from "../types";
 
 export const rotateTile = (id: TileId, rotation: number) => ({
   type: "ROTATE_TILE",
@@ -8,7 +8,7 @@ export const rotateTile = (id: TileId, rotation: number) => ({
   rotation,
 });
 
-export const startLevel = (board: BoardState) => {
+export const startLevel = (board: BoardMeta) => {
   return {
     type: "START_LEVEL",
     board,

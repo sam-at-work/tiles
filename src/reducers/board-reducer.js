@@ -1,9 +1,9 @@
 // @flow
 
-import type { Vertex, Tiles, BoardState, TileState } from "src/types";
+import type { Vertex, Tiles, BoardMeta, TileState } from "src/types";
 import { rotateTile, getOppositeEnfOfPath } from "../functions/tile";
 
-export default function board(state: BoardState = null, action: { type: string, [string]: any }) {
+export default function board(state: BoardMeta = null, action: { type: string, [string]: any }) {
   switch (action.type) {
     case "START_LEVEL":
       return updateBoard(action.board, action.board.idToTileState);
@@ -28,7 +28,7 @@ export default function board(state: BoardState = null, action: { type: string, 
  * @param idToTileState
  * @returns {{startingVertex: number, endVertex: number, vertexToTileId: {[p: number]: number}, adjacencyList: Array<Array<number>>, idToTileState: {[p: number]: TileState}, pathComplete: boolean, width: number, height: number, rotationTime: number}}
  */
-function updateBoard(state: BoardState, idToTileState: Tiles): BoardState {
+function updateBoard(state: BoardMeta, idToTileState: Tiles): BoardMeta {
   const { adjacencyList, startingVertex, vertexToTileId, rotationTime } = state;
 
   // disconnect all tiles

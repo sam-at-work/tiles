@@ -1,15 +1,15 @@
 import { boardGererator } from "./board-generator";
 import type { BoardState, BoardMeta } from "../types";
 
-export function levelGenerator(level): BoardState {
+export function levelGenerator(level): boardMeta {
   const { height, width } = boardSizeGenerator(level);
 
-  const { board, solutions, shortestPathLength }: BoardMeta = boardGererator(height, width, 100);
+  const boardMeta: BoardMeta = boardGererator(height, width, 100);
 
-  console.log(solutions);
-  console.log(shortestPathLength);
+  console.log(boardMeta.solutions);
+  console.log(boardMeta.shortestPathLength);
 
-  return board;
+  return boardMeta;
 }
 
 export function boardSizeGenerator(level) {

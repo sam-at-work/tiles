@@ -40,7 +40,7 @@ const AppStyles = styled.div`
   }
 `;
 
-function App({ gameStarted, pathComplete, level, dispatch }) {
+function App({ gameStarted, pathComplete, level, shortestPathLength, dispatch }) {
   console.info(`Level ${level}. Go!`);
   const loadLevel = () => dispatch(startLevel(levelGenerator(level)));
   if (!gameStarted) {
@@ -49,7 +49,7 @@ function App({ gameStarted, pathComplete, level, dispatch }) {
   return (
     <AppStyles>
       <Board className="grid" />
-      <HUD className="hud" level={level} />
+      <HUD className="hud" level={level} shortestPathLength={shortestPathLength} />
       {pathComplete ? <LevelComplete handleClick={loadLevel} /> : null}
     </AppStyles>
   );
@@ -60,6 +60,7 @@ const mapStateToProps = (
 ): { gameStarted: boolean, pathComplete: boolean | null, level: number } => ({
   gameStarted: state.game.gameStarted,
   pathComplete: state.board ? state.board.pathComplete : null,
+  shortestPathLength: state.board ? state.board.shortestPathLength : null,
   level: state.game.level,
 });
 
