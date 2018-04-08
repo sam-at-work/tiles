@@ -2,10 +2,12 @@
 
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import styled from "styled-components";
 
 import { startLevel } from "./actionCreators";
 import Board from "./components/Board";
 import Message from "./components/Message";
+import HUD from "./components/HUD";
 import { levelGenerator } from "./functions/level-generator";
 
 const WelcomeScreen = ({ handleClick }) => (
@@ -22,20 +24,38 @@ const LevelComplete = ({ handleClick }) => (
   </Message>
 );
 
+const AppStyles = styled.div`
+  margin-left: auto;
+  margin-right: auto;
+
+  .hud {
+    position: fixed;
+    top: 0;
+
+    // horizontally center
+    left: 50%;
+    transform: translateX(-50%);
+  }
+`;
+
 function App({ gameStarted, pathComplete, level, dispatch }) {
   console.info(`Level ${level}. Go!`);
-
   const loadLevel = () => dispatch(startLevel(levelGenerator(level)));
-
+  if (!gameStarted) {
+    return <WelcomeScreen handleClick={loadLevel} />;
+  }
   return (
-    <div>
-      {gameStarted ? <Board /> : <WelcomeScreen handleClick={loadLevel} />}
+    <AppStyles>
+      <Board />
+      <HUD className="hud" level={level} />
       {pathComplete ? <LevelComplete handleClick={loadLevel} /> : null}
-    </div>
+    </AppStyles>
   );
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (
+  state
+): { gameStarted: boolean, pathComplete: boolean | null, level: number } => ({
   gameStarted: state.game.gameStarted,
   pathComplete: state.board ? state.board.pathComplete : null,
   level: state.game.level,
