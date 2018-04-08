@@ -23,7 +23,7 @@ const Tile = styled.div`
     position: absolute;
     width: 100%;
     height: 100%;
-    background-color: sandybrown;
+    background-color: rgba(244, 164, 96, 0.7); //sandybrown;
     transform: rotate(${props => props.rotation}turn);
     transition: transform ${props => props.rotationTime}ms;
     will-change: transform;
