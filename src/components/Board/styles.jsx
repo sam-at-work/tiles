@@ -5,7 +5,7 @@ import tree from "./images/Tree_2.png";
 
 export default styled.div`
   --grid-gap: ${props => (props.width * props.height > 9 ? "2px" : "5px")};
-  @media (min-width: 600px) {
+  @media (min-width: 813px) {
     --grid-gap: ${props => (props.width * props.height > 9 ? "8px" : "12px")};
   }
 
