@@ -26,7 +26,6 @@ const Tile = styled.div`
     background-color: rgba(244, 164, 96, 0.7); //sandybrown;
     transform: rotate(${props => props.rotation}turn);
     transition: transform ${props => props.rotationTime}ms;
-    will-change: transform;
 
     .pipe {
       background-color: ${props => {

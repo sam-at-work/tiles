@@ -70,9 +70,13 @@ function App({
           <Button className="menu-button" onClick={() => dispatch(openMenu("home"))}>
             Menu
           </Button>
-
-          <CSSTransition in={pathComplete} timeout={1500} classNames="message" unmountOnExit>
-            <LevelComplete loadLevel={loadLevel} />
+          <CSSTransition
+            in={pathComplete}
+            timeout={1500}
+            classNames="message"
+            unmountOnExit
+          >
+            <LevelComplete level={level} loadLevel={loadLevel} />
           </CSSTransition>
         </AppStyles>
       ) : null}
