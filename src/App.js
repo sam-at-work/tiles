@@ -14,6 +14,8 @@ import Button from "./components/Menu/Button";
 import LevelComplete from "./components/Menus/LevelComplete";
 
 const AppStyles = styled.div`
+  ${props => (props.disabled ? `pointer-events: none;` : null)};
+
   height: 100%; /* to get board background to fill whole screen */
   .board {
     height: 100%; /* to get board background to fill whole screen */
@@ -38,13 +40,21 @@ const AppStyles = styled.div`
   }
 `;
 
-function App({ gameType, gameStarted, pathComplete, level, shortestPathLength, dispatch }) {
+function App({
+  openMenus,
+  gameType,
+  gameStarted,
+  pathComplete,
+  level,
+  shortestPathLength,
+  dispatch,
+}) {
   const loadLevel = () => dispatch(startLevel(levelGenerator()));
 
   return (
-    <AppStyles>
+    <React.Fragment>
       {gameStarted ? (
-        <React.Fragment>
+        <AppStyles disabled={openMenus.length > 0}>
           <Board className="board" />
           <HUD
             className="hud"
@@ -59,10 +69,10 @@ function App({ gameType, gameStarted, pathComplete, level, shortestPathLength, d
           <CSSTransition in={pathComplete} timeout={1500} classNames="message" unmountOnExit>
             <LevelComplete loadLevel={loadLevel} />
           </CSSTransition>
-        </React.Fragment>
+        </AppStyles>
       ) : null}
       <MenuController />
-    </AppStyles>
+    </React.Fragment>
   );
 }
 
@@ -74,6 +84,7 @@ const mapStateToProps = (
   pathComplete: state.board ? state.board.pathComplete : null,
   shortestPathLength: state.board ? state.board.shortestPathLength : null,
   level: state.game.level,
+  openMenus: state.game.openMenus,
 });
 
 export default connect(mapStateToProps)(App);

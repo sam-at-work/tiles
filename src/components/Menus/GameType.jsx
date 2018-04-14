@@ -9,8 +9,8 @@ export default function GameType({ closeMenu, landscapeButtonClick, portraitButt
   return (
     <Menu>
       <Title>Game Mode</Title>
-      <Button onClick={landscapeButtonClick}>Landscape</Button>
-      <Button onClick={portraitButtonClick}>Portrait</Button>
+      <Button onClick={landscapeButtonClick}>Desktop</Button>
+      <Button onClick={portraitButtonClick}>Phone</Button>
       <Button onClick={closeMenu}>Cancel</Button>
     </Menu>
   );

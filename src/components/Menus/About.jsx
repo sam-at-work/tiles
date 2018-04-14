@@ -10,7 +10,7 @@ export default function About({ closeMenu }) {
     <Menu>
       <Title>About</Title>
       <p>Game by Sam Grace</p>
-      <p>Special Thanks and Inspiration - Tim VS</p>
+      <p>Inspiration - Tim VS</p>
       <Button onClick={closeMenu}>Close</Button>
     </Menu>
   );
