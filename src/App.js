@@ -9,6 +9,7 @@ import Board from "./components/Board";
 import Message from "./components/Message";
 import HUD from "./components/HUD";
 import { levelGenerator } from "./functions/level-generator";
+import MenuController from "./components/Menus/MenuController";
 
 const WelcomeScreen = ({ handleClick }) => (
   <Message>
@@ -46,7 +47,7 @@ function App({ gameStarted, pathComplete, level, shortestPathLength, dispatch })
   console.info(`Level ${level}. Go!`);
   const loadLevel = () => dispatch(startLevel(levelGenerator(level)));
   if (!gameStarted) {
-    return <WelcomeScreen handleClick={loadLevel} />;
+    return <MenuController />;
   }
   return (
     <AppStyles>

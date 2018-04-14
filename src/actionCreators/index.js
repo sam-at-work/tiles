@@ -14,3 +14,10 @@ export const startLevel = (board: BoardMeta) => {
     board,
   };
 };
+
+export const setGameType = (gameType: "portrait" | "landscpae") => {
+  return {
+    type: "SET_GAME_TYPE",
+    gameType,
+  };
+};
