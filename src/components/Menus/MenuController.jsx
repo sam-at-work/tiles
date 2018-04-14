@@ -23,9 +23,9 @@ class MenuController extends React.Component {
     }));
 
   render() {
-    const { level, dispatch } = this.props;
+    const { gameStarted, level, dispatch } = this.props;
 
-    const clickStartButton = () => {
+    const clickPlayButton = () => {
       dispatch(startLevel(levelGenerator(level)));
       this.closeMenu();
     };
@@ -39,7 +39,9 @@ class MenuController extends React.Component {
       case "home":
         return (
           <Home
-            clickStartButton={clickStartButton}
+            gameStarted={gameStarted}
+            clickPlayButton={clickPlayButton}
+            clickContinueButton={this.closeMenu}
             clickSettingsButton={() => this.openMenu("game-type")}
             clickAboutButton={() => this.openMenu("about")}
           />
@@ -60,7 +62,8 @@ class MenuController extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  gameType: state.game.gameType,
+  gameStarted: state.game.gameStarted,
+  // gameType: state.game.gameType,
   level: state.game.level,
 });
 export default connect(mapStateToProps)(MenuController);

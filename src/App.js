@@ -11,13 +11,6 @@ import HUD from "./components/HUD";
 import { levelGenerator } from "./functions/level-generator";
 import MenuController from "./components/Menus/MenuController";
 
-const WelcomeScreen = ({ handleClick }) => (
-  <Message>
-    Ready to play?
-    <button onClick={handleClick}>Yes!</button>
-  </Message>
-);
-
 const LevelComplete = ({ handleClick }) => (
   <Message>
     Next Level?
@@ -46,14 +39,13 @@ const AppStyles = styled.div`
 function App({ gameStarted, pathComplete, level, shortestPathLength, dispatch }) {
   console.info(`Level ${level}. Go!`);
   const loadLevel = () => dispatch(startLevel(levelGenerator(level)));
-  if (!gameStarted) {
-    return <MenuController />;
-  }
+
   return (
     <AppStyles>
       <Board className="board" />
       <HUD className="hud" level={level} shortestPathLength={shortestPathLength} />
       {pathComplete ? <LevelComplete handleClick={loadLevel} /> : null}
+      <MenuController />;
     </AppStyles>
   );
 }

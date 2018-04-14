@@ -5,11 +5,21 @@ import Menu from "../Menu/Menu";
 import Title from "../Menu/Title";
 import Button from "../Menu/Button";
 
-export default function GameType({ clickStartButton, clickSettingsButton, clickAboutButton }) {
+export default function GameType({
+  gameStarted,
+  clickPlayButton,
+  clickContinueButton,
+  clickSettingsButton,
+  clickAboutButton,
+}) {
   return (
     <Menu>
       <Title>Beer Pipes</Title>
-      <Button onClick={clickStartButton}>Play</Button>
+      {gameStarted ? (
+        <Button onClick={clickContinueButton}>Continue</Button>
+      ) : (
+        <Button onClick={clickPlayButton}>Play</Button>
+      )}
       <Button onClick={clickSettingsButton}>Settings</Button>
       <Button onClick={clickAboutButton}>About</Button>
     </Menu>
