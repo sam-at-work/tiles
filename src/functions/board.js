@@ -4,6 +4,7 @@ import { newTile, rotateTile } from "./tile";
 
 import type { BoardState, TileId, TileState, Vertex } from "../types";
 
+let nextTileId: Vertex = 0; // every tile in every game to have unique id;
 /**
  * When w=2, total-paths=h
  * When w=3, total-paths=h^2
@@ -23,7 +24,6 @@ export function newBoardState(height: number, width: number): BoardState {
   const totalNodes: number = height * width * tileSides; // one node on each side of each tile
   const adjacencyList: Array<Array<number>> = Array.from({ length: totalNodes }, () => []);
 
-  let nextTileId: Vertex = 0;
   let nextVertexId: TileId = 0;
   let isStartingTile: boolean = false;
 

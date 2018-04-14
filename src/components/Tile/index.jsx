@@ -31,7 +31,7 @@ const Tile = styled.div`
     .pipe {
       background-color: ${props => {
         if (props.connected && props.pathComplete) return "yellow";
-        else if (props.connected) return "lightblue";
+        else if (props.connected) return "darkgrey";
         else return "black";
       }};
       transition-property: background-color;
