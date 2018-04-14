@@ -43,7 +43,7 @@ const AppStyles = styled.div`
     right: 0;
 `;
 
-function App({ gameStarted, pathComplete, level, shortestPathLength, dispatch }) {
+function App({ gameType, gameStarted, pathComplete, level, shortestPathLength, dispatch }) {
   console.info(`Level ${level}. Go!`);
   const loadLevel = () => dispatch(startLevel(levelGenerator(level)));
 
@@ -52,7 +52,7 @@ function App({ gameStarted, pathComplete, level, shortestPathLength, dispatch })
       {gameStarted ? (
         <React.Fragment>
           <Board className="board" />
-          <HUD className="hud" level={level} shortestPathLength={shortestPathLength} />
+          <HUD className="hud" level={level} shortestPathLength={shortestPathLength} gameType={gameType} />
           <Button className={"menu"} onClick={() => dispatch(openMenu("home"))}>
             Menu
           </Button>
@@ -68,6 +68,7 @@ const mapStateToProps = (
   state
 ): { gameStarted: boolean, pathComplete: boolean | null, level: number } => ({
   gameStarted: state.game.gameStarted,
+  gameType: state.game.gameType,
   pathComplete: state.board ? state.board.pathComplete : null,
   shortestPathLength: state.board ? state.board.shortestPathLength : null,
   level: state.game.level,
