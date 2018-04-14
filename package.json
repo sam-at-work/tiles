@@ -24,7 +24,9 @@
     "lint:css": "stylelint './src/**/*.{js,jsx}'",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
-    "ngrok": "ngrok http 3000"
+    "ngrok": "ngrok http 3000",
+    "predeploy-now": "npm run build && rm ./build/static/js/*.js.map",
+    "deploy-now": "now ./build --public --name=tiles"
   },
   "devDependencies": {
     "@storybook/addon-actions": "^3.3.15",
