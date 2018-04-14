@@ -1,5 +1,5 @@
 import React from "react";
-import Tile from "src/components/Tile/index";
+import Tile from "../Tile/index";
 import { connect } from "react-redux";
 
 import BoardWrapper from "./styles";

@@ -10,7 +10,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
 import TileDebugger from "./tile-debugger";
-import { rotateTile } from "src/actionCreators";
+import { rotateTile } from "../../actionCreators";
 
 const debug = false;
 

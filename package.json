@@ -2,7 +2,6 @@
   "name": "tiles",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://sam-at-work.github.io/tiles",
   "dependencies": {
     "gh-pages": "^1.1.0",
     "react": "^16.2.0",

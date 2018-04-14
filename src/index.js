@@ -6,8 +6,8 @@ import "./index.css";
 import App from "./App";
 import registerServiceWorker from "./registerServiceWorker";
 
-import "add-to-homescreen/addtohomescreen.css";
-import "add-to-homescreen/addtohomescreen";
+import "./add-to-homescreen/addtohomescreen.css";
+import "./add-to-homescreen/addtohomescreen";
 import { store } from "./store";
 
 window.addToHomescreen({ displayPace: 0, lifespan: 0 });
