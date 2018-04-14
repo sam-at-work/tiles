@@ -40,3 +40,9 @@ export const restart = () => {
     type: "RESTART",
   };
 };
+
+export const closeAllMenus = () => {
+  return {
+    type: "CLOSE_ALL_MENUS",
+  };
+};

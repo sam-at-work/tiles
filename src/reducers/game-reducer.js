@@ -19,6 +19,9 @@ export default function game(state = defaultState, action) {
     case "CLOSE_MENU": {
       return { ...state, openMenus: state.openMenus.slice(0, -1) };
     }
+    case "CLOSE_ALL_MENUS": {
+      return { ...state, openMenus: [] };
+    }
     case "RESTART": {
       return {
         ...state,

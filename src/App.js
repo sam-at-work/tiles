@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 import { CSSTransition } from "react-transition-group";
 
-import { openMenu, startLevel } from "./actionCreators";
+import { openMenu, startLevel, closeAllMenus } from "./actionCreators";
 import Board from "./components/Board";
 import HUD from "./components/HUD";
 import { levelGenerator } from "./functions/level-generator";
@@ -14,7 +14,7 @@ import Button from "./components/Menu/Button";
 import LevelComplete from "./components/Menus/LevelComplete";
 
 const AppStyles = styled.div`
-  ${props => (props.disabled ? `pointer-events: none;` : null)};
+  ${props => (props.disabled ? `> * {pointer-events: none;}` : null)};
 
   height: 100%; /* to get board background to fill whole screen */
   .board {
@@ -33,7 +33,7 @@ const AppStyles = styled.div`
     //transform: translateX(-50%);
   }
 
-  .menu {
+  .menu-button {
     position: fixed;
     top: 0;
     right: 0;
@@ -54,7 +54,12 @@ function App({
   return (
     <React.Fragment>
       {gameStarted ? (
-        <AppStyles disabled={openMenus.length > 0}>
+        <AppStyles
+          disabled={openMenus.length > 0}
+          onClick={() => {
+            if (openMenus.length) dispatch(closeAllMenus());
+          }}
+        >
           <Board className="board" />
           <HUD
             className="hud"
@@ -62,7 +67,7 @@ function App({
             shortestPathLength={shortestPathLength}
             gameType={gameType}
           />
-          <Button className={"menu"} onClick={() => dispatch(openMenu("home"))}>
+          <Button className="menu-button" onClick={() => dispatch(openMenu("home"))}>
             Menu
           </Button>
 
@@ -71,7 +76,7 @@ function App({
           </CSSTransition>
         </AppStyles>
       ) : null}
-      <MenuController />
+      <MenuController onClick={e => e.stopPropagation()} />
     </React.Fragment>
   );
 }
