@@ -21,3 +21,16 @@ export const setGameType = (gameType: "portrait" | "landscpae") => {
     gameType,
   };
 };
+
+export const openMenu = (menu: string) => {
+  return {
+    type: "OPEN_MENU",
+    menu,
+  };
+};
+
+export const closeMenu = () => {
+  return {
+    type: "CLOSE_MENU",
+  };
+};

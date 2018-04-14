@@ -4,12 +4,13 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 
-import { startLevel } from "./actionCreators";
+import { openMenu, startLevel } from "./actionCreators";
 import Board from "./components/Board";
 import Message from "./components/Message";
 import HUD from "./components/HUD";
 import { levelGenerator } from "./functions/level-generator";
 import MenuController from "./components/Menus/MenuController";
+import Button from "./components/Menu/Button";
 
 const LevelComplete = ({ handleClick }) => (
   <Message>
@@ -29,11 +30,17 @@ const AppStyles = styled.div`
   .hud {
     position: fixed;
     top: 0;
+    left: 0;
 
     // horizontally center
-    left: 50%;
-    transform: translateX(-50%);
+    //left: 50%;
+    //transform: translateX(-50%);
   }
+  
+  .menu {
+    position: fixed;
+    top: 0;
+    right: 0;
 `;
 
 function App({ gameStarted, pathComplete, level, shortestPathLength, dispatch }) {
@@ -42,9 +49,16 @@ function App({ gameStarted, pathComplete, level, shortestPathLength, dispatch })
 
   return (
     <AppStyles>
-      <Board className="board" />
-      <HUD className="hud" level={level} shortestPathLength={shortestPathLength} />
-      {pathComplete ? <LevelComplete handleClick={loadLevel} /> : null}
+      {gameStarted ? (
+        <div>
+          <Board className="board" />
+          <HUD className="hud" level={level} shortestPathLength={shortestPathLength} />
+          <Button className={"menu"} onClick={() => dispatch(openMenu("home"))}>
+            Menu
+          </Button>
+          {pathComplete ? <LevelComplete handleClick={loadLevel} /> : null}
+        </div>
+      ) : null}
       <MenuController />;
     </AppStyles>
   );
