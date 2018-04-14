@@ -3,6 +3,7 @@ const defaultState = {
   level: 1,
   gameType: "landscape",
   openMenus: ["home", "game-type"],
+  version: process.env.REACT_APP_VERSION,
 };
 
 export default function game(state = defaultState, action) {
