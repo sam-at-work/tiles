@@ -34,3 +34,9 @@ export const closeMenu = () => {
     type: "CLOSE_MENU",
   };
 };
+
+export const restart = () => {
+  return {
+    type: "RESTART",
+  };
+};

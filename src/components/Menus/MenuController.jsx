@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import Home from "./Home";
 import GameType from "./GameType";
 import { levelGenerator } from "../../functions/level-generator";
-import { closeMenu, openMenu, setGameType, startLevel } from "../../actionCreators";
+import { closeMenu, openMenu, restart, setGameType, startLevel} from "../../actionCreators";
 import About from "./About";
 
 class MenuController extends React.Component {
@@ -13,6 +13,11 @@ class MenuController extends React.Component {
 
   render() {
     const { openMenus, gameStarted, level, dispatch } = this.props;
+
+    const clickRestartButton = () => {
+      dispatch(restart());
+      clickPlayButton();
+    };
 
     const clickPlayButton = () => {
       dispatch(startLevel(levelGenerator(level)));
@@ -31,6 +36,7 @@ class MenuController extends React.Component {
             gameStarted={gameStarted}
             clickPlayButton={clickPlayButton}
             clickContinueButton={this.closeMenu}
+            clickRestartButton={clickRestartButton}
             clickSettingsButton={() => this.openMenu("game-type")}
             clickAboutButton={() => this.openMenu("about")}
           />
@@ -40,6 +46,7 @@ class MenuController extends React.Component {
           <GameType
             landscapeButtonClick={() => clickSetGameType("landscape")}
             portraitButtonClick={() => clickSetGameType("portrait")}
+            closeMenu={this.closeMenu}
           />
         );
       case "about":

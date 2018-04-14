@@ -9,6 +9,7 @@ export default function GameType({
   gameStarted,
   clickPlayButton,
   clickContinueButton,
+  clickRestartButton,
   clickSettingsButton,
   clickAboutButton,
 }) {
@@ -16,7 +17,10 @@ export default function GameType({
     <Menu>
       <Title>Beer Pipes</Title>
       {gameStarted ? (
-        <Button onClick={clickContinueButton}>Continue</Button>
+        <React.Fragment>
+          <Button onClick={clickContinueButton}>Continue</Button>
+          <Button onClick={clickRestartButton}>Restart</Button>
+        </React.Fragment>
       ) : (
         <Button onClick={clickPlayButton}>Play</Button>
       )}

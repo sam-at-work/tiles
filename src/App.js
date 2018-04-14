@@ -1,6 +1,6 @@
 // @flow
 
-import React, { Component } from "react";
+import * as React from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 
@@ -50,16 +50,16 @@ function App({ gameStarted, pathComplete, level, shortestPathLength, dispatch })
   return (
     <AppStyles>
       {gameStarted ? (
-        <div>
+        <React.Fragment>
           <Board className="board" />
           <HUD className="hud" level={level} shortestPathLength={shortestPathLength} />
           <Button className={"menu"} onClick={() => dispatch(openMenu("home"))}>
             Menu
           </Button>
           {pathComplete ? <LevelComplete handleClick={loadLevel} /> : null}
-        </div>
+        </React.Fragment>
       ) : null}
-      <MenuController />;
+      <MenuController />
     </AppStyles>
   );
 }
