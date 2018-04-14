@@ -11,7 +11,7 @@ let prevWidth = -1,
   prevHeight = -1,
   treeCol = 2;
 
-const Board = ({ idToTileState, width, height, pathComplete, ...props }) => {
+const Board = ({ idToTileState, width, height, ...props }) => {
   // NOTE here height is height of tiles.
   // actual height of board is height + 1 for the top row with locations.
   const tileRatio = width / (height + 1); // row and col ratio
@@ -48,7 +48,9 @@ const Board = ({ idToTileState, width, height, pathComplete, ...props }) => {
 
       <div className={"tiles-wrapper"}>
         <div className="grid tiles">
-          {Object.values(idToTileState).map(tile => <Tile key={tile.id} tile={tile} />)}
+          {Object.values(idToTileState).map(tile => (
+            <Tile key={tile.id} tile={tile} pathComplete={props.pathComplete} />
+          ))}
         </div>
       </div>
     </BoardWrapper>

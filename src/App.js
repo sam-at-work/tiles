@@ -3,21 +3,15 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
+import { CSSTransition } from "react-transition-group";
 
 import { openMenu, startLevel } from "./actionCreators";
 import Board from "./components/Board";
-import Message from "./components/Message";
 import HUD from "./components/HUD";
 import { levelGenerator } from "./functions/level-generator";
 import MenuController from "./components/Menus/MenuController";
 import Button from "./components/Menu/Button";
-
-const LevelComplete = ({ handleClick }) => (
-  <Message>
-    Next Level?
-    <button onClick={handleClick}>Yes!</button>
-  </Message>
-);
+import LevelComplete from "./components/Menus/LevelComplete";
 
 const AppStyles = styled.div`
   height: 100%; /* to get board background to fill whole screen */
@@ -36,27 +30,35 @@ const AppStyles = styled.div`
     //left: 50%;
     //transform: translateX(-50%);
   }
-  
+
   .menu {
     position: fixed;
     top: 0;
     right: 0;
+  }
 `;
 
 function App({ gameType, gameStarted, pathComplete, level, shortestPathLength, dispatch }) {
-  console.info(`Level ${level}. Go!`);
-  const loadLevel = () => dispatch(startLevel(levelGenerator(level)));
+  const loadLevel = () => dispatch(startLevel(levelGenerator()));
 
   return (
     <AppStyles>
       {gameStarted ? (
         <React.Fragment>
           <Board className="board" />
-          <HUD className="hud" level={level} shortestPathLength={shortestPathLength} gameType={gameType} />
+          <HUD
+            className="hud"
+            level={level}
+            shortestPathLength={shortestPathLength}
+            gameType={gameType}
+          />
           <Button className={"menu"} onClick={() => dispatch(openMenu("home"))}>
             Menu
           </Button>
-          {pathComplete ? <LevelComplete handleClick={loadLevel} /> : null}
+
+          <CSSTransition in={pathComplete} timeout={1500} classNames="message" unmountOnExit>
+            <LevelComplete loadLevel={loadLevel} />
+          </CSSTransition>
         </React.Fragment>
       ) : null}
       <MenuController />

@@ -26,7 +26,6 @@ export default function board(state: BoardMeta = null, action: { type: string, [
  *
  * @param state
  * @param idToTileState
- * @returns {{startingVertex: number, endVertex: number, vertexToTileId: {[p: number]: number}, adjacencyList: Array<Array<number>>, idToTileState: {[p: number]: TileState}, pathComplete: boolean, width: number, height: number, rotationTime: number}}
  */
 function updateBoard(state: BoardMeta, idToTileState: Tiles): BoardMeta {
   const { adjacencyList, startingVertex, vertexToTileId, rotationTime } = state;
@@ -42,6 +41,8 @@ function updateBoard(state: BoardMeta, idToTileState: Tiles): BoardMeta {
     tile.animationDelay = 0;
   });
 
+  const connectedPath: Array<TileState> = [];
+
   let nextExternalVertex: Vertex | void = startingVertex;
   let newlyConnectedTileCount: number = 0;
   let nextVertex: Vertex | void = undefined;
@@ -49,10 +50,13 @@ function updateBoard(state: BoardMeta, idToTileState: Tiles): BoardMeta {
   while (nextExternalVertex !== undefined) {
     const tileId: number = vertexToTileId[nextExternalVertex];
     const tile: TileState = idToTileState[tileId];
+
+    // check if tile is connected - end now if not.
     const vertexConnectsToPipe = tile.externalPath.includes(nextExternalVertex);
     if (!vertexConnectsToPipe) break;
-
     tile.connected = true;
+    connectedPath.push(tile);
+
     if (!prevConnectedTiles.has(tile.id)) {
       tile.animationDelay = logarithmicDelay(rotationTime, newlyConnectedTileCount++);
     }
@@ -62,8 +66,12 @@ function updateBoard(state: BoardMeta, idToTileState: Tiles): BoardMeta {
 
     nextExternalVertex = adjacencyList[nextVertex][0]; // will be undefined if it points off board
   }
+  const pathComplete = nextVertex === state.endVertex;
+  if (pathComplete) {
+    connectedPath.forEach((tile, index) => (tile.animationDelay = logarithmicDelay(100, index)));
+  }
 
-  return { ...state, idToTileState, pathComplete: nextVertex === state.endVertex };
+  return { ...state, idToTileState, pathComplete };
 }
 
 function logarithmicDelay(rotationTime: number, n: number): number {

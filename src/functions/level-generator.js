@@ -20,6 +20,8 @@ export function boardSizeGenerator() {
   const width = startingWidth + Math.floor((level - 1) / LEVELS_PER_STAGE);
   const height = width + (level - 1) % LEVELS_PER_STAGE;
 
+  console.info(`Level ${level}. Go!`);
+
   if (gameType == "portrait") return { height, width };
   return { height: width, width: height };
 }

@@ -29,8 +29,14 @@ const Tile = styled.div`
     will-change: transform;
 
     .pipe {
-      background-color: ${props => (props.connected ? "lightblue" : "black")};
-      transition: background-color 200ms ${props => props.animationDelay}ms;
+      background-color: ${props => {
+        if (props.connected && props.pathComplete) return "yellow";
+        else if (props.connected) return "lightblue";
+        else return "black";
+      }};
+      transition-property: background-color;
+      transition-duration: ${props => (props.connected ? 200 : 500)}ms;
+      transition-delay: ${props => props.animationDelay}ms;
       height: 100%;
       width: 100%;
       clip-path: ${props => props.clipPath};

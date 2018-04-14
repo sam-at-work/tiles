@@ -12,6 +12,8 @@ export default styled.div`
   display: flex;
   flex-direction: column;
 
+  ${props => (props.pathComplete ? `pointer-events: none;` : null)};
+
   .locations-wrapper {
     background-color: lightskyblue;
   }
