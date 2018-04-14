@@ -6,7 +6,7 @@ let persistedState = localStorage.getItem("reduxState")
   ? JSON.parse(localStorage.getItem("reduxState"))
   : {};
 
-if (persistedState.game.version !== process.env.REACT_APP_VERSION) {
+if (persistedState.game && persistedState.game.version !== process.env.REACT_APP_VERSION) {
   persistedState = {};
 }
 
